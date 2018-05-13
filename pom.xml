@@ -19,7 +19,7 @@
     </parent>
 
     <groupId>com.github.geng</groupId>
-    <artifactId>sale-oranges-x</artifactId>
+    <artifactId>sale-oranges-xyz</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

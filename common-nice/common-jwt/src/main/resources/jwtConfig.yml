@@ -1,0 +1,7 @@
+
+ # JWT config
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 100 #单位：秒
+  tokenHead: Bearer
