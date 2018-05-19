@@ -13,7 +13,7 @@ public class BaseLongIdEntity extends BaseIdEntity<Long> {
 
     /**
      * 判断是否新增数据
-     * @return
+     * @return true 新增 | false 不是
      */
     @Transient
     public boolean isNewRaw() {

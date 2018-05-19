@@ -6,10 +6,10 @@ import org.springframework.context.ApplicationEvent;
 
 /**
  * <pre>
- *     构建事件，同时可以调用发布,依赖spring 容器
- *     事件接收者需要实现 ApplicationListener<T extends ApplicationEvent> 接口
- *     同时，事件接收者需要注入spring 容器
- *     参考 https://blog.csdn.net/tuzongxun/article/details/53637159
+ * 构建事件，同时可以调用发布,依赖spring 容器
+ * 事件接收者需要实现 ApplicationListener 接口
+ * 同时，事件接收者需要注入spring 容器
+ * 参考 https://blog.csdn.net/tuzongxun/article/details/53637159
  * </pre>
  * @author geng
  */
@@ -45,7 +45,7 @@ public class EventPublish extends ApplicationEvent {
 
     /**
      * 获取事件内容
-     * @return
+     * @return 事件内容
      */
     public Object getContent() {
         return content;

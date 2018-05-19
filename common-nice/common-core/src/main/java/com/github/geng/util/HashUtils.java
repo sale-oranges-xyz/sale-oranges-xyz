@@ -75,6 +75,10 @@ public class HashUtils {
 
     /**
      * Universal Hashing
+     * @param key key
+     * @param mask mask
+     * @param tab tab
+     * @return hash后值
      */
     public static int universal(char[] key, int mask, int[] tab) {
         int hash = key.length, i, len = key.length;
@@ -102,6 +106,10 @@ public class HashUtils {
 
     /**
      * Zobrist Hashing
+     * @param key key
+     * @param mask mask
+     * @param tab tab
+     * @return hash后值
      */
     public static int zobrist(char[] key, int mask, int[][] tab) {
         int hash, i;
@@ -130,7 +138,6 @@ public class HashUtils {
 
     /**
      * 改进的32位FNV算法1
-     *
      * @param data  数组
      * @return int值
      */
@@ -149,7 +156,6 @@ public class HashUtils {
 
     /**
      * 改进的32位FNV算法1
-     *
      * @param data 字符串
      * @return int值
      */
@@ -168,6 +174,8 @@ public class HashUtils {
 
     /**
      * Thomas Wang的算法，整数hash
+     * @param key 整型数值
+     * @return hash后值
      */
     public static int intHash(int key) {
         key += ~(key << 15);
@@ -181,8 +189,8 @@ public class HashUtils {
 
     /**
      * RS算法hash
-     *
      * @param str 字符串
+     * @return hash后值
      */
     public static int RSHash(String str) {
         int b = 378551;
@@ -194,10 +202,11 @@ public class HashUtils {
         }
         return (hash & 0x7FFFFFFF);
     }
-    /* End Of RS Hash Function */
 
     /**
      * JS算法
+     * @param str 字符串
+     * @return hash后值
      */
     public static int JSHash(String str) {
         int hash = 1315423911;
@@ -206,10 +215,11 @@ public class HashUtils {
         }
         return (hash & 0x7FFFFFFF);
     }
-    /* End Of JS Hash Function */
 
     /**
      * PJW算法
+     * @param str 字符串
+     * @return hash后值
      */
     public static int PJWHash(String str) {
         int BitsInUnsignedInt = 32;
@@ -227,10 +237,11 @@ public class HashUtils {
         }
         return (hash & 0x7FFFFFFF);
     }
-    /* End Of P. J. Weinberger Hash Function */
 
     /**
      * ELF算法
+     * @param str 字符串
+     * @return hash后值
      */
     public static int ELFHash(String str) {
         int hash = 0;
@@ -244,10 +255,11 @@ public class HashUtils {
         }
         return (hash & 0x7FFFFFFF);
     }
-    /* End Of ELF Hash Function */
 
     /**
      * BKDR算法
+     * @param str 字符串
+     * @return hash后值
      */
     public static int BKDRHash(String str) {
         int seed = 131; // 31 131 1313 13131 131313 etc..
@@ -257,10 +269,11 @@ public class HashUtils {
         }
         return (hash & 0x7FFFFFFF);
     }
-    /* End Of BKDR Hash Function */
 
     /**
      * SDBM算法
+     * @param str 字符串
+     * @return hash后值
      */
     public static int SDBMHash(String str) {
         int hash = 0;
@@ -269,10 +282,11 @@ public class HashUtils {
         }
         return (hash & 0x7FFFFFFF);
     }
-    /* End Of SDBM Hash Function */
 
     /**
      * DJB算法
+     * @param str 字符串
+     * @return hash后值
      */
     public static int DJBHash(String str) {
         int hash = 5381;
@@ -281,10 +295,11 @@ public class HashUtils {
         }
         return (hash & 0x7FFFFFFF);
     }
-    /* End Of DJB Hash Function */
 
     /**
      * DEK算法
+     * @param str 字符串
+     * @return hash后值
      */
     public static int DEKHash(String str) {
         int hash = str.length();
@@ -293,10 +308,11 @@ public class HashUtils {
         }
         return (hash & 0x7FFFFFFF);
     }
-    /* End Of DEK Hash Function */
 
     /**
      * AP算法
+     * @param str 字符串
+     * @return hash后值
      */
     public static int APHash(String str) {
         int hash = 0;
@@ -304,13 +320,13 @@ public class HashUtils {
             hash ^= ((i & 1) == 0) ? ((hash << 7) ^ str.charAt(i) ^ (hash >> 3))
                     : (~((hash << 11) ^ str.charAt(i) ^ (hash >> 5)));
         }
-        // return (hash & 0x7FFFFFFF);
         return hash;
     }
-    /* End Of AP Hash Function */
 
     /**
      * JAVA自己带的算法
+     * @param str 字符串
+     * @return hash后值
      */
     public static int java(String str) {
         int h = 0;
@@ -324,6 +340,8 @@ public class HashUtils {
 
     /**
      * 混合hash算法，输出64位的值
+     * @param str 字符串
+     * @return hash后值
      */
     public static long mixHash(String str) {
         long hash = str.hashCode();

@@ -1,6 +1,6 @@
 package com.github.geng.exception;
 
-import com.github.geng.exception.SysException;
+import com.github.geng.response.SysExceptionMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +21,14 @@ public class SysExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public ResponseEntity<SysException> ExceptionHandler(HttpServletRequest req, Exception e){
+    public ResponseEntity<SysExceptionMsg> ExceptionHandler(HttpServletRequest req, Exception e){
         String url = req.getRequestURI();
 
         log.error(String.format("路径 %s 请求异常", url),e);
-        SysException SysException = new SysException(e.getMessage(), System.currentTimeMillis());
+        SysExceptionMsg SysException = new SysExceptionMsg(e.getMessage(), System.currentTimeMillis());
 
-        if (e instanceof BadCredentialsException) {//token异常，表示禁止访问
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(SysException);
+        if (e instanceof BadCredentialsException) {// token异常，表示禁止访问
+            return ResponseEntity.status(HttpStatus.OK).body(SysException);
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(SysException);
     }

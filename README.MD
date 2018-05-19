@@ -8,17 +8,23 @@
     | - common-swagger 接口api说明，前后端交互使用。注意api接口包名要以*.controller命名
     | - common-mvc  spring mvc 相关方面的配置
     | - common-jwt  token 相关配置
+    | - common-auth-client 服务器间调用授权与客户授权模块
  | - register-center 服务注册中心
+ | - api-gateway api网关
  | - domains 存放实体类与业务逻辑处理
-    | - admin-users 微服务：系统管理用户
-        | - users 管理用户实体类
-        | - business 业务逻辑实现
+    | - admin-users 微服务：系统用户管理
+        | - admin-users-dto 用户管理传输实体类
+        | - admin-users-business 业务逻辑实现
+    | - auth-center 用户认证与服务器认证中心
+        | - auth-center-dto http传输数据
+        | - auth-center-business 业务逻辑实现
+        
 ```
 ##### 说明
 ```
 1.部分依赖jar包声明为provided,目的是减少重复引用
-2.创建启动类，必须在com.github.geng目录之前，原因是启动配置文件都是在com.github.geng.*
-	当然，也可以使用@ComponentScans 扫描指定包名。
+2.创建启动类，需要在com.github.geng目录之前，原因是启动配置文件都是在com.github.geng.*
+	当然，也可以不这样处理，但是必须使用@ComponentScans 扫描指定包名。
 3.创建时间与修改时间使用时间戳，是因为考虑到不同时区问题
 4.service层定义接口原因：
     (1).service方法是模块暴露给其他模块的,修改时需要特别注意 
@@ -29,5 +35,12 @@
 8.为什么实体类与业务逻辑要分成两个模块
     (1).因为微服务远程调用需要用到其他项目实体类，不想重复写两套代码
     (2).重复写两套代码，维护难度加大
-	
+   
+```
+
+##### 项目规范
+```
+1.spring cloud 的微服务之间调用都是通过http请求，即都是通过controller层交互。
+	而controller层传输数据都是dto(Data Transfer Object)数据。
+	为了减少重复代码，考虑把dto层独立成单独maven模块。
 ```

@@ -12,8 +12,8 @@
     <artifactId>admin-users</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>users</module>
-        <module>business</module>
+        <module>admin-users-dto</module>
+        <module>admin-users-business</module>
     </modules>
 
 

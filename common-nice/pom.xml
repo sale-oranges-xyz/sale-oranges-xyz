@@ -17,6 +17,7 @@
         <module>common-swagger</module>
         <module>common-mvc</module>
         <module>common-jwt</module>
+        <module>common-auth-client</module>
     </modules>
 
 

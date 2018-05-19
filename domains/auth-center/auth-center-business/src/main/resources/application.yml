@@ -1,0 +1,27 @@
+spring:
+    application:
+        name: auth-center
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/common_client?useUnicode=true&characterEncoding=utf8
+        username: geng
+        password: 123
+
+server:
+    port: 8081 #启动端口
+
+eureka:
+    instance:
+        statusPageUrlPath: /info
+        healthCheckUrlPath: /health
+    client:
+        serviceUrl:
+            defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+
+
+client:
+  id: auth-center
+  secret: 123456
+  token-header: client-token
+  expire: 3600
+  rsa-secret: (^-^)

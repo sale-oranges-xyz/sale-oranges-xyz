@@ -18,8 +18,8 @@ public class Base64Util {
 
     /**
      * base64 加密
-     * @param str
-     * @return
+     * @param str 字符串
+     * @return 加密后内容
      */
     public static String encode(String str) {
         if (null == str) {
@@ -30,8 +30,8 @@ public class Base64Util {
 
     /**
      * base64 解密
-     * @param str
-     * @return
+     * @param str 字符串
+     * @return 解密后内容
      */
     public static String decode(String str) {
         byte[] bytes = Base64.getDecoder().decode(str);

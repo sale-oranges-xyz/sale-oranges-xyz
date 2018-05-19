@@ -28,8 +28,8 @@ public class IdEncryptUtils {
 
     /**
      * id 加密
-     * @param id
-     * @return
+     * @param id id
+     * @return 加密后id
      */
     public static String encode(Long id) {
         return NullOptional.validate(id, value -> {
@@ -61,8 +61,8 @@ public class IdEncryptUtils {
 
     /**
      * id 解密
-     * @param base64Str
-     * @return
+     * @param base64Str 加密后id
+     * @return 加密前id
      */
     public static Long decode(String base64Str) {
         return NullOptional.validate(base64Str , value -> {

@@ -18,13 +18,13 @@ public abstract class EventListener implements ApplicationListener<EventPublish>
     /**
      * 根据需要判断事件是否匹配
      * @param event 自定义事件
-     * @return
+     * @return true 匹配 | false 不匹配
      */
     protected abstract boolean match(EventPublish event);
 
     /**
      * 匹配成功后执行操作
-     * @param event
+     * @param event 事件
      */
     protected abstract void bingo(EventPublish event);
 

@@ -24,8 +24,8 @@ public class RequestUtils {
 
     /**
      * 获取客户端真实的ip地址
-     * @param request
-     * @return
+     * @param request HttpServletRequest
+     * @return 真实ip地址
      */
     public static String getIp(HttpServletRequest request){
         String ip = request.getHeader("x-forwarded-for");
@@ -49,8 +49,8 @@ public class RequestUtils {
 
     /**
      * 判断是否ajax访问
-     * @param request
-     * @return
+     * @param request HttpServletRequest
+     * @return true 是 | false 不是
      */
     public static boolean isAjax(HttpServletRequest request){
         String ajaxFlag = request.getHeader("X-Requested-With");

@@ -15,13 +15,13 @@ public class ConverterUtils {
 
     /**
      * string 转int,无法转换时返回null
-     * @param vlaue
-     * @return
+     * @param value 输入字符串
+     * @return 无法转换时返回null
      */
-    public static Integer stringToInt(String vlaue) {
+    public static Integer stringToInt(String value) {
         IntegerStringConverter integerStringConverter = new IntegerStringConverter();
         try {
-           return integerStringConverter.fromString(vlaue);
+           return integerStringConverter.fromString(value);
         } catch (NumberFormatException e) {
             log.error("数据解析异常",e);
             return null;
@@ -30,15 +30,15 @@ public class ConverterUtils {
 
     /**
      * string 转int， 无法转换时使用默认值
-     * @param vlaue
-     * @param defaultValue
-     * @return
+     * @param value 输入值
+     * @param defaultValue 默认值
+     * @return 无法转换时返回null
      */
-    public static int StringToIntDefault(String vlaue,int defaultValue) {
+    public static int StringToIntDefault(String value,int defaultValue) {
         IntegerStringConverter integerStringConverter = new IntegerStringConverter();
         try {
-            Optional<Integer> value = Optional.ofNullable(integerStringConverter.fromString(vlaue));
-            return value.orElse(defaultValue);
+            Optional<Integer> valueOptional = Optional.ofNullable(integerStringConverter.fromString(value));
+            return valueOptional.orElse(defaultValue);
         } catch (NumberFormatException e) {
             log.error("数据解析异常",e);
             return defaultValue;

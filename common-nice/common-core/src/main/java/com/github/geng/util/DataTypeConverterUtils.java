@@ -11,7 +11,7 @@ public class DataTypeConverterUtils {
     /**
      * long 转 byte[]
      * @param x long类型数据
-     * @return
+     * @return byte[]
      */
     public static byte[] longToBytes(long x) {
         ByteBuffer buffer = ByteBuffer.allocate(8);

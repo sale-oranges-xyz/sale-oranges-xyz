@@ -11,8 +11,10 @@
 
     <artifactId>domains</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>admin-users</module>
+        <module>auth-center</module>
     </modules>
 
 
