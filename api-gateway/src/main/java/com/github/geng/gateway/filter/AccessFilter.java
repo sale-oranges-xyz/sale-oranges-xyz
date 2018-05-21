@@ -38,6 +38,7 @@ import java.util.List;
  *  在完成了服务路由之后，我们对外开放服务还需要一些安全措施来保护客户端只能访问它应该访问到的资源。
  *  所以我们需要利用Zuul的过滤器来实现我们对外服务的安全控制。
  *  在服务网关中定义过滤器只需要继承ZuulFilter抽象类实现其定义的四个抽象函数就可对请求进行拦截与过滤
+ *  全局异常处理，参考 http://blog.didispace.com/spring-cloud-zuul-exception/
  * </pre>
  * @author geng
  */
@@ -134,7 +135,7 @@ public class AccessFilter extends ZuulFilter {
         }
 
         // 获取用户权限
-        List<SysPermissionDto> permissionDtos = ApiResponseEntity.get200Body(adminService.getUserPermissions());
+        List<SysPermissionDto> permissionDtos = adminService.getUserPermissions();
         if (CollectionUtils.isEmpty(permissionDtos)) {
             SysExceptionMsg message = new SysExceptionMsg("token无效",
                     System.currentTimeMillis(),

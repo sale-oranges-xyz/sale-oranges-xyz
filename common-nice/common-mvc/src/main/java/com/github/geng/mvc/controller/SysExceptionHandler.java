@@ -1,10 +1,10 @@
-package com.github.geng.exception;
+package com.github.geng.mvc.controller;
 
+import com.github.geng.exception.BizException;
 import com.github.geng.response.SysExceptionMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * 使用切面拦截全局异常
  * @author geng
  */
-@ControllerAdvice
+@ControllerAdvice // 可使用 basePackages 捕获特定包异常
 @Slf4j
 public class SysExceptionHandler {
 
@@ -25,12 +25,19 @@ public class SysExceptionHandler {
         String url = req.getRequestURI();
 
         log.error(String.format("路径 %s 请求异常", url),e);
-        SysExceptionMsg SysException = new SysExceptionMsg(e.getMessage(), System.currentTimeMillis());
 
-        if (e instanceof BadCredentialsException) {// token异常，表示禁止访问
-            return ResponseEntity.status(HttpStatus.OK).body(SysException);
+        SysExceptionMsg sysException;
+        // 处理客户端输入数据异常
+        if (e instanceof BizException) {
+            BizException bizException = (BizException)e;
+            sysException = new SysExceptionMsg(e.getMessage(),
+                System.currentTimeMillis(), bizException.getStatus());
+            return ResponseEntity.ok(sysException);
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(SysException);
+        sysException = new SysExceptionMsg(e.getMessage(),
+                System.currentTimeMillis(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        // 处理服务内部异常
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(sysException);
     }
-
 }
+

@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface AdminUserService {
 
     @PostMapping(value = "/api/user/validate")
-    ResponseEntity<UserDto> validate(UserLoginForm userLoginForm);
+    UserDto validate(UserLoginForm userLoginForm);
 
 }

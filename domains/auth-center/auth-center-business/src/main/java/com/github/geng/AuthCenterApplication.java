@@ -1,4 +1,4 @@
-package com.github.geng.auth.center;
+package com.github.geng;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;

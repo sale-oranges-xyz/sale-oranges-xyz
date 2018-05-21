@@ -26,7 +26,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Override
     public String auth(UserLoginForm userLoginForm) {
-        UserDto userDto = ApiResponseEntity.get200Body(userService.validate(userLoginForm));
+        UserDto userDto = userService.validate(userLoginForm);
         if (null != userDto) {
             return jwtTokenManager.generateToken(userDto.getLoginName(), userDto.getId());
         }

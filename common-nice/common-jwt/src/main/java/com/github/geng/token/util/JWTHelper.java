@@ -32,7 +32,7 @@ public class JWTHelper {
         log.debug("加密token,有效期:{}",expire);
         String compactJws = Jwts.builder()
                 .setSubject(jwtInfo.getId())
-                .claim(JWTConstants.JWT_KEY_NAME, jwtInfo.getServiceName())
+                .claim(JWTConstants.JWT_USER_NAME, jwtInfo.getServiceName())
                 .setExpiration(DateTime.now().plusSeconds(expire).toDate())
                 .signWith(SignatureAlgorithm.RS256, rsaKeyHelper.getPrivateKey(priKeyPath))
                 .compact();
@@ -51,7 +51,7 @@ public class JWTHelper {
         log.debug("加密token,有效期:{}",expire);
         String compactJws = Jwts.builder()
                 .setSubject(jwtInfo.getId())
-                .claim(JWTConstants.JWT_KEY_NAME, jwtInfo.getServiceName())
+                .claim(JWTConstants.JWT_USER_NAME, jwtInfo.getServiceName())
                 .setExpiration(DateTime.now().plusSeconds(expire).toDate())
                 .signWith(SignatureAlgorithm.RS256, rsaKeyHelper.getPrivateKey(priKey))
                 .compact();
@@ -93,7 +93,7 @@ public class JWTHelper {
         log.debug("获取token中的用户信息");
         Jws<Claims> claimsJws = parserToken(token, pubKeyPath);
         Claims body = claimsJws.getBody();
-        return new ServiceTokenInfo(body.getSubject(), StringUtil.getObjectValue(body.get(JWTConstants.JWT_KEY_NAME)));
+        return new ServiceTokenInfo(body.getSubject(), StringUtil.getObjectValue(body.get(JWTConstants.JWT_USER_NAME)));
     }
     /**
      * 获取token中的用户信息
@@ -107,6 +107,6 @@ public class JWTHelper {
         log.debug("获取token中的用户信息");
         Jws<Claims> claimsJws = parserToken(token, pubKey);
         Claims body = claimsJws.getBody();
-        return new ServiceTokenInfo(body.getSubject(), StringUtil.getObjectValue(body.get(JWTConstants.JWT_KEY_NAME)));
+        return new ServiceTokenInfo(body.getSubject(), StringUtil.getObjectValue(body.get(JWTConstants.JWT_USER_NAME)));
     }
 }

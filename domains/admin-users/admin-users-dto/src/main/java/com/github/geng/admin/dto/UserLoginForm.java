@@ -15,7 +15,7 @@ public class UserLoginForm implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "用户名")
-    private String username;
+    private String loginName;
     @ApiModelProperty(value = "密码")
     private String password;
 

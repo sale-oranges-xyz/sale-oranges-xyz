@@ -3,6 +3,7 @@ package com.github.geng.admin.business.service;
 import com.github.geng.admin.business.entity.SysPermission;
 import com.github.geng.admin.business.entity.SysUser;
 import com.github.geng.admin.dto.UserLoginForm;
+import com.github.geng.exception.BizException;
 
 import java.util.List;
 
@@ -30,5 +31,5 @@ public interface SysUserService {
      * @param userLoginForm 表单信息
      * @return 用户记录
      */
-    SysUser login(UserLoginForm userLoginForm);
+    SysUser login(UserLoginForm userLoginForm) throws BizException;
 }

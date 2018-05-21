@@ -2,22 +2,23 @@
 
 ##### 项目结构
 ```
+ | - api-gateway api网关
  | - common-nice 存放项目的公用模块
+    | - common-auth-client 服务器间调用授权与客户授权模块
     | - common-core 存放封装的公用代码库
+    | - common-jwt  token 相关配置
+    | - common-mvc  spring mvc 相关方面的配置
     | - common-redis redis使用配置
     | - common-swagger 接口api说明，前后端交互使用。注意api接口包名要以*.controller命名
-    | - common-mvc  spring mvc 相关方面的配置
-    | - common-jwt  token 相关配置
-    | - common-auth-client 服务器间调用授权与客户授权模块
- | - register-center 服务注册中心
- | - api-gateway api网关
+    | - common-sys-feign 远程调用时全局异常处理
  | - domains 存放实体类与业务逻辑处理
     | - admin-users 微服务：系统用户管理
         | - admin-users-dto 用户管理传输实体类
         | - admin-users-business 业务逻辑实现
-    | - auth-center 用户认证与服务器认证中心
+    | - auth-center 微服务：鉴权中心
         | - auth-center-dto http传输数据
         | - auth-center-business 业务逻辑实现
+ | - register-center 服务注册中心
         
 ```
 ##### 说明

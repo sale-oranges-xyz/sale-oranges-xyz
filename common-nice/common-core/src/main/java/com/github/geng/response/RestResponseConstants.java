@@ -16,6 +16,9 @@ public class RestResponseConstants {
      * 用户token 禁止访问
      */
     public static int USER_FORBIDDEN_TOKEN = 500403;
-
+    /**
+     * 默认客户输入异常状态码
+     */
+    public static int USER_UNKNOW_ERROR = 500500;
 
 }

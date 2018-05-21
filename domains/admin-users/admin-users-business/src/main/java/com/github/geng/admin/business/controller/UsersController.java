@@ -8,11 +8,14 @@ import com.github.geng.admin.business.service.SysUserService;
 import com.github.geng.admin.dto.SysPermissionDto;
 import com.github.geng.admin.dto.UserDto;
 import com.github.geng.admin.dto.UserLoginForm;
+import com.github.geng.exception.BizException;
 import com.github.geng.mvc.controller.BaseController;
 import com.github.geng.token.info.UserTokenInfo;
 import com.github.geng.util.IdEncryptUtils;
+import com.github.geng.util.JSONUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,7 @@ import java.util.List;
 /**
  * @author geng
  */
+@Slf4j
 @RestController
 @RequestMapping(value = "/user")
 @Api(value = "UsersController", description = "用户管理api")
@@ -34,7 +38,6 @@ public class UsersController extends BaseController {
     private PermissionMapper permissionMapper;
     @Autowired
     private SysUserMapper sysUserMapper;
-
 
     @ApiOperation(value="获取用户权限列表", httpMethod = "GET", notes="用户管理api")
     @RequestMapping(value = "/permissions", method = RequestMethod.GET)
@@ -48,7 +51,12 @@ public class UsersController extends BaseController {
     @ApiOperation(value="用户登录", httpMethod = "POST", notes="用户管理api")
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
     public ResponseEntity<UserDto> login(@RequestBody UserLoginForm userLoginForm) {
-        SysUser sysUser = sysUserService.login(userLoginForm);
+        SysUser sysUser = null;
+        try {
+            sysUser = sysUserService.login(userLoginForm);
+        } catch (BizException e) {
+            log.debug("用户:{}登录异常,原因:{}", JSONUtils.createJson(userLoginForm), e.getMessage());
+        }
         return ResponseEntity.ok(sysUserMapper.entity2Dto(sysUser));
     }
 

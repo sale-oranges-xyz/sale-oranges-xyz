@@ -18,10 +18,32 @@ eureka:
         serviceUrl:
             defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
 
-
 client:
   id: auth-center
   secret: 123456
   token-header: client-token
   expire: 3600
   rsa-secret: (^-^)
+
+# 配置参考 https://github.com/Netflix/Hystrix/wiki/Configuration
+# https://blog.csdn.net/harris135/article/details/77879148?locationNum=3&fps=1
+hystrix:
+  threadpool:
+    default:
+      coreSize: 1000 ##并发执行的最大线程数，默认10
+      maxQueueSize: 1000 ##BlockingQueue的最大队列数
+      queueSizeRejectionThreshold: 500 ##即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+
+client:
+  id: sale-oranges
+  secret: geng
+  token-header: client-token
+  expire: 60
+  rsa-secret: (๑•̀ㅂ•́)و✧

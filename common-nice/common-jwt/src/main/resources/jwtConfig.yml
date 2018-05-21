@@ -1,15 +1,7 @@
 
- # JWT configuration
+ # JWT configuration  expiration单位：分钟
 jwt:
   header: Authorization
   secret: mySecret
-  expiration: 60 #单位：分钟
+  expiration: 60
   tokenHead: Bearer
-
-
-client:
-  id: sale-oranges
-  secret: geng
-  token-header: client-token
-  expire: 60
-  rsa-secret: (๑•̀ㅂ•́)و✧
