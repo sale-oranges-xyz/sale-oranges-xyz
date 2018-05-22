@@ -20,6 +20,7 @@
         <module>common-jwt</module>
         <module>common-auth-client</module>
         <module>common-sys-feign</module>
+        <module>common-security</module>
     </modules>
 
 

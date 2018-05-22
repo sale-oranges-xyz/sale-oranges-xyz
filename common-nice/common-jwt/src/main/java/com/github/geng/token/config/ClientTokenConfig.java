@@ -14,17 +14,15 @@ import java.io.Serializable;
  * created by geng
  */
 @Data
-//@Configuration
-//@PropertySource(value = "classpath:jwtConfig.yml")
-//@ConfigurationProperties(prefix = "client", ignoreUnknownFields =false)
 @Component
+@PropertySource(value = "classpath:application.yml") // 指定读取主配置文件
 public class ClientTokenConfig {
 
     private byte[] pubKeyByte;
 
-    @Value("${client.id:null}")
+    @Value("${client.id}")
     private String clientId;
-    @Value("${client.secret}")
+    @Value("${client.rsa-secret}")
     private String clientSecret;
     @Value("${client.token-header}")
     private String tokenHeader;

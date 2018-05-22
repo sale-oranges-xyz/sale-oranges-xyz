@@ -1,6 +1,7 @@
 package com.github.geng.mvc.controller;
 
 import com.github.geng.exception.BizException;
+import com.github.geng.exception.ServiceException;
 import com.github.geng.response.SysExceptionMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -34,10 +35,19 @@ public class SysExceptionHandler {
                 System.currentTimeMillis(), bizException.getStatus());
             return ResponseEntity.ok(sysException);
         }
+        // 服务端异常,有不同状态
+        if (e instanceof ServiceException) {
+            ServiceException serviceException = (ServiceException)e;
+            sysException = new SysExceptionMsg(serviceException.getMessage(),
+                    System.currentTimeMillis(), serviceException.getStatus());
+            // 处理服务内部异常
+            return ResponseEntity.status(serviceException.getStatus()).body(sysException);
+        }
+        // 最后，不知名异常
         sysException = new SysExceptionMsg(e.getMessage(),
                 System.currentTimeMillis(), HttpStatus.INTERNAL_SERVER_ERROR.value());
-        // 处理服务内部异常
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(sysException);
     }
+
 }
 

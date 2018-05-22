@@ -3,17 +3,16 @@ package com.github.geng.auth.center.entity;
 import com.github.geng.entity.BaseLongIdTimeEntity;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 服务访问白名单
  * @author geng
  */
 @Data
+@Entity
 @Table(name = "service_allow_clients")
+// 注意@Table与@Entity区别，参考 https://www.cnblogs.com/alsf/p/7822241.html
 public class AllowClient extends BaseLongIdTimeEntity {
     private static final long serialVersionUID = 1L;
 

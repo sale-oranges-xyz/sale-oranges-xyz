@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * 系统权限
@@ -12,7 +13,8 @@ import javax.persistence.Entity;
  */
 @Data
 @NoArgsConstructor
-@Entity(name = "sys_permission")
+@Entity
+@Table(name = "sys_permission")
 public class SysPermission extends BaseLongIdTimeEntity {
     private static final long serialVersionUID = 1L;
 

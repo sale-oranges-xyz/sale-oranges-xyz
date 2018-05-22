@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class JWTHelper {
+public class ServiceTokenManger {
     private static RsaKeyManager rsaKeyHelper = new RsaKeyManager();
 
     /**

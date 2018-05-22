@@ -31,25 +31,31 @@ public class SysErrorDecoder implements ErrorDecoder {
         try {
             if (null != response.body()) {
                 String body = Util.toString(response.body().asReader());
-                log.error("feign调用出错", body);
+                log.error("feign调用出错,原因:{}", body);
                 ExceptionInfo exceptionInfo = JSONUtils.readValue(body, ExceptionInfo.class);
-                Class clazz = Class.forName(exceptionInfo.getException());
-                Object obj = clazz.newInstance();
+                if (null != exceptionInfo.getException()) {
+                    Class clazz = Class.forName(exceptionInfo.getException());
+                    Object obj = clazz.newInstance();
 
-                String message = exceptionInfo.getMessage();
-                String targetMsg;
-                if (obj instanceof BizException) { // 异常完整信息需要返回客户端，客户端需要根据具体异常信息做处理
-                    targetMsg = message.substring(message.indexOf("{"), message.indexOf("}") + 1);
-                    return JSONUtils.readValue(targetMsg, BizException.class);
+                    String message = exceptionInfo.getMessage();
+                    String targetMsg;
+                    if (obj instanceof BizException) { // 异常完整信息需要返回客户端，客户端需要根据具体异常信息做处理
+                        targetMsg = message.substring(message.indexOf("{"), message.indexOf("}") + 1);
+                        return JSONUtils.readValue(targetMsg, BizException.class);
+                    } else {
+                        targetMsg=message.substring(message.indexOf(":"),message.length());
+                        return new ServiceException(targetMsg);
+                    }
                 } else {
-                    targetMsg=message.substring(message.indexOf(":"),message.length());
-                    return new ServiceException(targetMsg);
+                    // 信息输出前端
+                    return new ServiceException(exceptionInfo.getError(), exceptionInfo.getStatus());
                 }
             }
         } catch (Exception e) {
-            log.error("feign解析异常出错", e.getMessage());
+            // 显式完整堆栈信息
+            log.error("feign解析异常出错", e);
             return new ServiceException(e.getMessage());
         }
-        return new ServiceException("今天的风儿有点喧嚣,找管理员说说吧");
+        return new ServiceException("今天的风儿有点喧嚣,跟管理员说说吧");
     }
 }

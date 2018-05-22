@@ -12,4 +12,7 @@ public class ServiceException extends BaseException{
         super(message, HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
+    public ServiceException(String message, int code) {
+        super(message, code);
+    }
 }

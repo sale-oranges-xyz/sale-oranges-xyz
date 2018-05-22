@@ -52,7 +52,10 @@ public class SysUserServiceImpl implements SysUserService {
         }
         // 判断密码
         if (bCryptPasswordEncoder.matches(userLoginForm.getPassword(), loginUser.getPassword())) {
-            return loginUser;
+            // 保存用户登录信息
+            loginUser.setLoginTime(System.currentTimeMillis());
+            // 可以获取登录ip
+            return userRepository.save(loginUser);
         }
         throw new BizException("用户名密码错误");
     }

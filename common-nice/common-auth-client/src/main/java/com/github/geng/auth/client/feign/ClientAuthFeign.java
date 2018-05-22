@@ -20,7 +20,7 @@ public interface ClientAuthFeign {
      * @return 获取token
      */
     @PostMapping(value = "/client/access-token")
-    ResponseEntity<String> getAccessToken(ClientForm clientForm);
+    String getAccessToken(ClientForm clientForm);
 
     /**
      * 获取允许访问的微服务列表
@@ -28,7 +28,7 @@ public interface ClientAuthFeign {
      * @return 允许访问微服务列表
      */
     @PostMapping(value = "/client/allowed-client")
-    ResponseEntity<List<String>> getAllowedClient(ClientForm clientForm);
+    List<String> getAllowedClient(ClientForm clientForm);
 
 
 }

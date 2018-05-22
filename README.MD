@@ -9,6 +9,7 @@
     | - common-jwt  token 相关配置
     | - common-mvc  spring mvc 相关方面的配置
     | - common-redis redis使用配置
+    | - common-security 微服务的通用security配置
     | - common-swagger 接口api说明，前后端交互使用。注意api接口包名要以*.controller命名
     | - common-sys-feign 远程调用时全局异常处理
  | - domains 存放实体类与业务逻辑处理
@@ -30,18 +31,23 @@
 4.service层定义接口原因：
     (1).service方法是模块暴露给其他模块的,修改时需要特别注意 
     (2).spring有两种动态代理jdk与cglib，jdk8动态代理性能提升
-5.remote层：微服务远程调用方法
-6.dto(Data Transfer Object)层：api接口传输对象
+5.feign层：微服务远程调用方法
+6.dto(Data Transfer Object)层：api接口传输对象,controller层之间交互
 7.一般初始化sql，放在resources下
 8.为什么实体类与业务逻辑要分成两个模块
     (1).因为微服务远程调用需要用到其他项目实体类，不想重复写两套代码
     (2).重复写两套代码，维护难度加大
-   
-```
 
+```
 ##### 项目规范
 ```
 1.spring cloud 的微服务之间调用都是通过http请求，即都是通过controller层交互。
 	而controller层传输数据都是dto(Data Transfer Object)数据。
-	为了减少重复代码，考虑把dto层独立成单独maven模块。
+	为了减少重复代码，应把dto层独立成单独maven模块
+2.考虑集成flyway
+```
+##### 注意点整理
+```
+1.@Table与@Entity区别，参考 https://www.cnblogs.com/alsf/p/7822241.html
+2.启动顺序：register-center -> auth-center | admin-users -> api-gateway 
 ```

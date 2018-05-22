@@ -45,8 +45,8 @@ hystrix:
             timeoutInMilliseconds: 5000
 
 client:
-  id: sale-oranges
+  id: admin-users
   secret: geng
   token-header: client-token
   expire: 60
-  rsa-secret: (๑•̀ㅂ•́)و✧
+  rsa-secret: (\^-^\)

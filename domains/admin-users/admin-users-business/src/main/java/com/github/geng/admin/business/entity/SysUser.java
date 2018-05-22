@@ -14,7 +14,8 @@ import java.util.Set;
  */
 @Data
 @NoArgsConstructor
-@Entity(name="sys_user")
+@Entity
+@Table(name = "sys_user")
 public class SysUser extends BaseLongIdTimeEntity {
     private static final long serialVersionUID = 1L;
 

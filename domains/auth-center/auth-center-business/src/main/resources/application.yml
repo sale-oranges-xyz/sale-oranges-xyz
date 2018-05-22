@@ -20,10 +20,10 @@ eureka:
 
 client:
   id: auth-center
-  secret: 123456
+  secret: geng
   token-header: client-token
-  expire: 3600
-  rsa-secret: (^-^)
+  expire: 60
+  rsa-secret: (\^-^\)
 
 # 配置参考 https://github.com/Netflix/Hystrix/wiki/Configuration
 # https://blog.csdn.net/harris135/article/details/77879148?locationNum=3&fps=1
@@ -39,11 +39,8 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 5000
-
-
-client:
-  id: sale-oranges
-  secret: geng
-  token-header: client-token
-  expire: 60
-  rsa-secret: (๑•̀ㅂ•́)و✧
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        util: trace

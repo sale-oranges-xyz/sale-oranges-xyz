@@ -13,7 +13,8 @@ import javax.persistence.*;
  */
 @Data
 @NoArgsConstructor
-@Entity(name = "sys_role")
+@Entity
+@Table(name = "sys_role")
 public class SysRole extends BaseLongIdTimeEntity {
     private static final long serialVersionUID = 1L;
 

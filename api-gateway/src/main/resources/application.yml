@@ -22,3 +22,10 @@ zuul:
 gate:
   ignore:
     startWith: /static,/auth/login
+
+client:
+  id: api-gateway
+  secret: geng
+  token-header: client-token
+  expire: 60
+  rsa-secret: (\^-^\)

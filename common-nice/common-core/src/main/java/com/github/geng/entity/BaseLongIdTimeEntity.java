@@ -15,7 +15,7 @@ import javax.persistence.MappedSuperclass;
 public class BaseLongIdTimeEntity extends BaseLongIdEntity {
     private static final long serialVersionUID = 1L;
 
-    private Long createTime;
-    private Long modifyTime;
+    private Long createdTime;
+    private Long modifiedTime;
 
 }

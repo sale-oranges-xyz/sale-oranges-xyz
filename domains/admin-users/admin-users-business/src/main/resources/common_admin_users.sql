@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50131
 File Encoding         : 65001
 
-Date: 2018-05-13 22:37:08
+Date: 2018-05-21 23:34:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,11 +21,11 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `sys_permission`;
 CREATE TABLE `sys_permission` (
   `id` bigint(32) unsigned NOT NULL AUTO_INCREMENT,
-  `create_time` bigint(20) unsigned NOT NULL,
+  `created_time` bigint(20) unsigned NOT NULL,
   `permission` varchar(255) NOT NULL COMMENT '权限标识',
   `url` varchar(255) NOT NULL COMMENT '跳转连接',
   `name` varchar(255) DEFAULT NULL COMMENT '权限名称',
-  `modify_time` bigint(20) DEFAULT NULL,
+  `modified_time` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -41,7 +41,7 @@ DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
   `id` bigint(32) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL COMMENT '角色名称',
-  `create_time` bigint(20) unsigned DEFAULT NULL,
+  `created_time` bigint(20) unsigned DEFAULT NULL,
   `modified_time` bigint(20) unsigned DEFAULT NULL,
   `status` smallint(1) DEFAULT '0',
   `is_super_admin` smallint(1) DEFAULT '0' COMMENT '是否超级管理员',
@@ -77,7 +77,7 @@ CREATE TABLE `sys_user` (
   `login_name` varchar(15) NOT NULL COMMENT '登录名',
   `password` varchar(64) NOT NULL COMMENT '密码',
   `user_name` varchar(15) NOT NULL COMMENT '用户名',
-  `create_time` bigint(20) NOT NULL COMMENT '创建时间',
+  `created_time` bigint(20) NOT NULL COMMENT '创建时间',
   `modified_time` bigint(20) DEFAULT NULL COMMENT '最近一次账号修改时间',
   `login_time` bigint(20) DEFAULT NULL COMMENT '最近一次登录时间',
   `status` smallint(1) DEFAULT '0',

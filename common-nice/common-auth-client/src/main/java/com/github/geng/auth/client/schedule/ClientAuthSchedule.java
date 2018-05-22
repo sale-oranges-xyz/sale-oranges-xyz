@@ -47,7 +47,7 @@ public class ClientAuthSchedule {
     public void refreshClientToken() {
         log.debug("刷新微服务:{} token",clientTokenConfig.getApplicationName());
         ClientForm clientForm = new ClientForm(clientTokenConfig.getClientId(), clientTokenConfig.getClientSecret());
-        clientToken = ApiResponseEntity.get200Body(clientAuthFeign.getAccessToken(clientForm));
+        clientToken = clientAuthFeign.getAccessToken(clientForm);
     }
 
     public List<String> getAllowedClient() {
@@ -61,7 +61,7 @@ public class ClientAuthSchedule {
     public void refreshAllowedClient() {
         log.debug("刷新微服务:{}可微服务访问列表",clientTokenConfig.getApplicationName());
         ClientForm clientForm = new ClientForm(clientTokenConfig.getClientId(), clientTokenConfig.getClientSecret());
-        allowedClient =ApiResponseEntity.get200Body(clientAuthFeign.getAllowedClient(clientForm));
+        allowedClient = clientAuthFeign.getAllowedClient(clientForm);
     }
 
 }
