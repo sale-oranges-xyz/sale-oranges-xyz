@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 获取token后返回前端数据
+ * 封装 token 实体类
  * @author geng
  */
 @Data

@@ -53,9 +53,7 @@ public class AccessFilter extends ZuulFilter {
     private AdminService adminService;
 
     @Autowired
-    private ClientTokenConfig clientTokenConfig; // 服务端 token 配置
-    @Autowired
-    private ClientAuthSchedule clientAuthSchedule;
+    private ClientFeignInterceptor clientFeignInterceptor;
     @Autowired
     private EurekaClient discoveryClient;
     @Autowired
@@ -66,8 +64,6 @@ public class AccessFilter extends ZuulFilter {
     @PostConstruct // 注解使用参考 https://blog.csdn.net/wo541075754/article/details/52174900
     public void init() {
         InstanceInfo prodSvcInfo = discoveryClient.getNextServerFromEureka("admin-users", false);
-        ClientFeignInterceptor clientFeignInterceptor =
-                new ClientFeignInterceptor(clientTokenConfig, clientAuthSchedule);
         // 设置编码格式，获取类实例
         this.adminService = Feign.builder().encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
@@ -122,9 +118,9 @@ public class AccessFilter extends ZuulFilter {
             return null;
         }
         // 获取用户信息
-        UserTokenInfo userTokenInfo = null;
+        UserTokenInfo userTokenInfo;
         try {
-            this.getUserFromRequest(request, context);
+            userTokenInfo = this.getUserFromRequest(request, context);
         } catch (Exception e) {
             // 返回自定义错误信息
             SysExceptionMsg message = new SysExceptionMsg(e.getMessage(),
@@ -135,7 +131,7 @@ public class AccessFilter extends ZuulFilter {
         }
 
         // 获取用户权限
-        List<SysPermissionDto> permissionDtos = adminService.getUserPermissions();
+        List<SysPermissionDto> permissionDtos = adminService.getUserPermissions(userTokenInfo.getId());
         if (CollectionUtils.isEmpty(permissionDtos)) {
             SysExceptionMsg message = new SysExceptionMsg("token无效",
                     System.currentTimeMillis(),
@@ -156,8 +152,6 @@ public class AccessFilter extends ZuulFilter {
             requestFailed(JSONUtils.createJson(message), HttpStatus.OK.value(), context);
             return null;
         }
-        // 设置 token
-        context.addZuulRequestHeader(clientTokenConfig.getTokenHeader(), clientAuthSchedule.getClientToken());
         return null;
     }
 

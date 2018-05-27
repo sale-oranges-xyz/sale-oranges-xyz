@@ -12,18 +12,25 @@ server:
 
 eureka:
     instance:
-        statusPageUrlPath: /info
+        statusPageUrlPath: /entity
         healthCheckUrlPath: /health
     client:
         serviceUrl:
             defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
 
 client:
   id: auth-center
   secret: geng
   token-header: client-token
+  # 单位：分钟
   expire: 60
-  rsa-secret: (\^-^\)
+  rsa-secret: (/^-^/)
+
+authorize:
+  ignore: /user/token,/user/refresh,/client/access-token
 
 # 配置参考 https://github.com/Netflix/Hystrix/wiki/Configuration
 # https://blog.csdn.net/harris135/article/details/77879148?locationNum=3&fps=1

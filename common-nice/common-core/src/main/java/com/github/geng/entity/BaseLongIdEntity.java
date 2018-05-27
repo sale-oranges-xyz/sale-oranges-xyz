@@ -1,15 +1,23 @@
 package com.github.geng.entity;
 
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author geng
  */
+@Data
 @MappedSuperclass
-public class BaseLongIdEntity extends BaseIdEntity<Long> {
+public class BaseLongIdEntity implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    // id 生成策略 参考 https://blog.csdn.net/u011781521/article/details/72210980
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     /**
      * 判断是否新增数据
@@ -17,10 +25,17 @@ public class BaseLongIdEntity extends BaseIdEntity<Long> {
      */
     @Transient
     public boolean isNewRaw() {
-        if (null == super.getId() || super.getId() == -1L) {
+        if (null == id || id == -1L) {
             return true;
         }
         return false;
     }
-
+    // ----------------------------------------------------
+    // constructors
+    public BaseLongIdEntity() {
+        super();
+    }
+    public BaseLongIdEntity(Long id) {
+        this.id = id;
+    }
 }

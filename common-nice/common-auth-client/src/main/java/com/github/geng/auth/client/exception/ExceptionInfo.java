@@ -1,4 +1,4 @@
-package com.github.geng.feign.exception;
+package com.github.geng.auth.client.exception;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

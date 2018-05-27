@@ -9,8 +9,17 @@ import java.util.List;
  */
 public interface ClientAuthService {
 
-    String apply(ClientForm clientForm);
+    /**
+     * 获取token
+     * @return token
+     */
+    String createToken();
 
+    /**
+     * 获取当前微服务允许访问的微服务
+     * @param clientForm
+     * @return
+     */
     List<String> allowedClient(ClientForm clientForm);
 
     /**
@@ -19,4 +28,11 @@ public interface ClientAuthService {
      * @return true 通过 | false 不通过
      */
     boolean validate(ClientForm clientForm);
+
+    /**
+     * 刷新token
+     * @param oldToken 旧token
+     * @return 新token
+     */
+    String refresh(String oldToken);
 }

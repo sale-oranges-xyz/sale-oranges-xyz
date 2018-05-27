@@ -13,6 +13,6 @@ import java.util.List;
 public interface AdminService {
 
     @GetMapping(value = "/user/permissions")
-    List<SysPermissionDto> getUserPermissions();
+    List<SysPermissionDto> getUserPermissions(String userId);
 
 }

@@ -16,7 +16,8 @@ import org.springframework.context.ApplicationListener;
 public abstract class EventListener implements ApplicationListener<EventPublish> {
 
     /**
-     * 根据需要判断事件是否匹配
+     * 根据需要判断事件是否匹配<br>
+     * 一般使用 instanceof 对 content 进行对象类型判断
      * @param event 自定义事件
      * @return true 匹配 | false 不匹配
      */
@@ -24,14 +25,14 @@ public abstract class EventListener implements ApplicationListener<EventPublish>
 
     /**
      * 匹配成功后执行操作
-     * @param event 事件
+     * @param content 事件内容
      */
-    protected abstract void bingo(EventPublish event);
+    protected abstract void bingo(Object content);
 
     @Override
     public void onApplicationEvent(EventPublish event) {
         if (this.match(event)) {
-            this.bingo(event);
+            this.bingo(event.getContent());
         }
     }
 }

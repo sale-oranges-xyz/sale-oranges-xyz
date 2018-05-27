@@ -2,7 +2,7 @@
 #注册服务配置
 eureka:
   instance:
-    statusPageUrlPath: /info
+    statusPageUrlPath: /entity
     healthCheckUrlPath: /health
     prefer-ip-address: true
   client:

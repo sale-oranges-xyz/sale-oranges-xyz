@@ -10,11 +10,11 @@ import com.github.geng.admin.dto.UserDto;
 import com.github.geng.admin.dto.UserLoginForm;
 import com.github.geng.exception.BizException;
 import com.github.geng.mvc.controller.BaseController;
-import com.github.geng.token.info.UserTokenInfo;
 import com.github.geng.util.IdEncryptUtils;
 import com.github.geng.util.JSONUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +41,10 @@ public class UsersController extends BaseController {
 
     @ApiOperation(value="获取用户权限列表", httpMethod = "GET", notes="用户管理api")
     @RequestMapping(value = "/permissions", method = RequestMethod.GET)
-    public ResponseEntity<List<SysPermissionDto>> userPermissions () {
-        UserTokenInfo userTokenInfo = this.getUserTokenInfo();
-        long userId = IdEncryptUtils.decode(userTokenInfo.getId());
-        List<SysPermission> userPermissions = sysUserService.findUserPermission(userId);
+    public ResponseEntity<List<SysPermissionDto>> userPermissions
+            (@ApiParam(value = "用户混淆id") @RequestParam String userId) {
+        long id = IdEncryptUtils.decode(userId);
+        List<SysPermission> userPermissions = sysUserService.findUserPermission(id);
         return ResponseEntity.ok(permissionMapper.entityListToDtoList(userPermissions));
     }
 

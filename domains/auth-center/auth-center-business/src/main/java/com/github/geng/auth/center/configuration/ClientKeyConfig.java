@@ -11,12 +11,9 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Data
 @Configuration
-@PropertySource(value = "classpath:application.yml") // 指定读取主配置文件
 public class ClientKeyConfig {
 
-    @Value("${client.rsa-secret}")
-    private String serviceSecret;
-    private String servicePriKey;
-    private String servicePubKey;
+    private byte[] servicePriKey;
+    private byte[] servicePubKey;
 
 }

@@ -7,7 +7,6 @@ import org.springframework.util.StringUtils;
  */
 public class SysStringUtil extends StringUtils {
 
-
     /**
      * 判断字符串数组是否以特定字符开头
      * @param sources 字符串数组
@@ -44,5 +43,20 @@ public class SysStringUtil extends StringUtils {
         return false;
     }
 
-
+    /**
+     * 根据具体内容分字符串字符串
+     * @param sources 分割字符串
+     * @param pathSeparate 分割符
+     * @return 分割后数组
+     */
+    public static String[] splitBySpecificSeparate(String sources, String pathSeparate) {
+        if (null == sources) {
+            return new String[]{};
+        }
+        if (sources.contains(pathSeparate)) {
+            return sources.split(pathSeparate);
+        } else {
+            return new String[]{ sources };
+        }
+    }
 }

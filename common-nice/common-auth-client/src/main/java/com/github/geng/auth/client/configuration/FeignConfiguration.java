@@ -1,4 +1,4 @@
-package com.github.geng.feign.config;
+package com.github.geng.auth.client.configuration;
 
 import feign.codec.ErrorDecoder;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;

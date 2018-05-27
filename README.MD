@@ -4,14 +4,14 @@
 ```
  | - api-gateway api网关
  | - common-nice 存放项目的公用模块
-    | - common-auth-client 服务器间调用授权与客户授权模块
+    | - common-auth-client 服务器间调用授权与客户授权模块,
+        远程调用处理
     | - common-core 存放封装的公用代码库
     | - common-jwt  token 相关配置
     | - common-mvc  spring mvc 相关方面的配置
     | - common-redis redis使用配置
     | - common-security 微服务的通用security配置
     | - common-swagger 接口api说明，前后端交互使用。注意api接口包名要以*.controller命名
-    | - common-sys-feign 远程调用时全局异常处理
  | - domains 存放实体类与业务逻辑处理
     | - admin-users 微服务：系统用户管理
         | - admin-users-dto 用户管理传输实体类
@@ -50,4 +50,6 @@
 ```
 1.@Table与@Entity区别，参考 https://www.cnblogs.com/alsf/p/7822241.html
 2.启动顺序：register-center -> auth-center | admin-users -> api-gateway 
+3.项目里的feign的远程调用，是不经过网关的。
+    所以一个微服务有没有权限访问其他微服，需要在各自的服务filter做处理
 ```

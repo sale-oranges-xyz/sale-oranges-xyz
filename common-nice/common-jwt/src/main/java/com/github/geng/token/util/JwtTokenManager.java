@@ -106,7 +106,7 @@ public class JwtTokenManager implements Serializable {
 
     /**
      * 判断token是否过期
-     * @return true 未过期 | false 过期
+     * @return true 过期 | false 未过期
      */
     public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);

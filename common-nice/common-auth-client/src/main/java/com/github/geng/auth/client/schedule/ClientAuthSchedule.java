@@ -1,13 +1,15 @@
 package com.github.geng.auth.client.schedule;
 
 import com.github.geng.auth.center.dto.ClientForm;
+import com.github.geng.auth.client.entity.event.AllowedClient;
 import com.github.geng.auth.client.feign.ClientAuthFeign;
-import com.github.geng.response.ApiResponseEntity;
+import com.github.geng.event.EventListener;
+import com.github.geng.event.EventPublish;
 import com.github.geng.token.config.ClientTokenConfig;
+import com.github.geng.token.response.JwtAuthenticationResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.CollectionUtils;
@@ -22,7 +24,7 @@ import java.util.List;
 @Configuration
 @Slf4j
 @EnableScheduling // 开启任务调度
-public class ClientAuthSchedule {
+public class ClientAuthSchedule extends EventListener {
 
     @Autowired
     private ClientAuthFeign clientAuthFeign;
@@ -41,18 +43,18 @@ public class ClientAuthSchedule {
     }
 
     /**
-     * 刷新token 信息，配置参考 https://www.cnblogs.com/softidea/p/5833248.html
+     * 任务调度刷新token 信息，配置参考 https://www.cnblogs.com/softidea/p/5833248.html
      */
-    @Scheduled(cron = "0 0 */1 * * ?") // 每小时更新一次
+    @Scheduled(cron = "0 59 * * * ?") // 每小时59分更新一次
     public void refreshClientToken() {
         log.debug("刷新微服务:{} token",clientTokenConfig.getApplicationName());
-        ClientForm clientForm = new ClientForm(clientTokenConfig.getClientId(), clientTokenConfig.getClientSecret());
-        clientToken = clientAuthFeign.getAccessToken(clientForm);
+        // ClientForm clientForm = new ClientForm(clientTokenConfig.getClientId(), clientTokenConfig.getClientSecret());
+        clientToken = clientAuthFeign.getAccessToken();
     }
 
     public List<String> getAllowedClient() {
         log.debug("获取微服务:{}可微服务访问列表",clientTokenConfig.getApplicationName());
-        if (CollectionUtils.isEmpty(allowedClient)) {
+        if (null == allowedClient) {
             this.refreshAllowedClient();
         }
         return allowedClient;
@@ -64,4 +66,34 @@ public class ClientAuthSchedule {
         allowedClient = clientAuthFeign.getAllowedClient(clientForm);
     }
 
+    // -------------------------------------------------------------
+    // 事件通知, 由 auth-center runner 下的 AuthClientRunner 发送
+    @Override
+    protected boolean match(EventPublish event) {
+        if (event.getContent() instanceof JwtAuthenticationResponse) {
+            log.debug("接收事件通知,获取token");
+            return true;
+        }
+        if (event.getContent() instanceof AllowedClient) {
+            log.debug("接收事件通知,获取可访问微服务列表");
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    protected void bingo(Object content) {
+        if (content instanceof JwtAuthenticationResponse) {
+            log.debug("开始获取微服务:{} token", clientTokenConfig.getApplicationName());
+            JwtAuthenticationResponse jwtAuthenticationResponse = (JwtAuthenticationResponse)content;
+            clientToken = jwtAuthenticationResponse.getToken();
+        }
+
+        if (content instanceof AllowedClient) {
+            log.debug("开始获取微服务:{} 可访问服务列表", clientTokenConfig.getApplicationName());
+            AllowedClient allowedClientContent = (AllowedClient)content;
+            allowedClient = allowedClientContent.getList();
+        }
+    }
 }

@@ -14,11 +14,11 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "请求form")
+@ApiModel(value = "服务请求form")
 public class ClientForm implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "服务记录id")
+    @ApiModelProperty(value = "服务记录名称")
     private String clientId;
     @ApiModelProperty(value = "密钥")
     private String secret;

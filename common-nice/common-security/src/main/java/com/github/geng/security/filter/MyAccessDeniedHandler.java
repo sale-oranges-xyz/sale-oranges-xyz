@@ -1,6 +1,6 @@
 package com.github.geng.security.filter;
 
-import com.github.geng.exception.BizException;
+import com.github.geng.exception.ErrorMsg;
 import com.github.geng.util.JSONUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,8 +29,8 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
 
-        BizException bizException = new BizException("token无效", HttpStatus.FORBIDDEN.value());
-        httpServletResponse.getWriter().println(JSONUtils.createJson(bizException));
+        ErrorMsg errorMsg = new ErrorMsg("token无效", HttpStatus.FORBIDDEN.value());
+        httpServletResponse.getWriter().println(JSONUtils.createJson(errorMsg));
         httpServletResponse.getWriter().flush();
     }
 }

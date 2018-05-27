@@ -26,7 +26,7 @@ public class UserAuthController extends BaseController {
     private UserAuthService userAuthService;
 
     @ApiOperation(value="用户获取token", httpMethod = "POST", notes="用户端鉴权控制中心api")
-    @RequestMapping(value = "token", method = RequestMethod.POST)
+    @RequestMapping(value = "/token", method = RequestMethod.POST)
     public ResponseEntity<JwtAuthenticationResponse>
             createAuthenticationToken(@RequestBody UserLoginForm userLoginForm) {
         String token =userAuthService.auth(userLoginForm);
@@ -34,7 +34,7 @@ public class UserAuthController extends BaseController {
     }
 
     @ApiOperation(value="用户刷新token", httpMethod = "POST", notes="用户端鉴权控制中心api")
-    @RequestMapping(value = "refresh", method = RequestMethod.POST)
+    @RequestMapping(value = "/refresh", method = RequestMethod.POST)
     public ResponseEntity<JwtAuthenticationResponse> refreshToken () {
         String token = this.getUserToken();
         String newToken = userAuthService.refresh(token);

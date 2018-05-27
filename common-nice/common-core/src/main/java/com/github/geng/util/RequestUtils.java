@@ -5,6 +5,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 /**
  *  request请求工具类
@@ -14,12 +15,24 @@ public class RequestUtils {
 
     private RequestUtils(){}
 
+    /**
+     * 获取当前请求HttpServletRequest
+     * @return null | HttpServletRequest 实例
+     */
     public static HttpServletRequest getRequest(){
-        return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+        return Optional.ofNullable((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .map(ServletRequestAttributes::getRequest)
+                .orElse(null);
     }
 
+    /**
+     * 获取当前请求HttpServletResponse
+     * @return null | HttpServletResponse 实例
+     */
     public static HttpServletResponse getResponse(){
-        return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getResponse();
+        return Optional.ofNullable((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
+                .map(ServletRequestAttributes::getResponse)
+                .orElse(null);
     }
 
     /**

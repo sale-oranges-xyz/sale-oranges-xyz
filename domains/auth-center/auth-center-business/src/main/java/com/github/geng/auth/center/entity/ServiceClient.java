@@ -19,12 +19,9 @@ public class ServiceClient extends BaseLongIdTimeEntity {
 
     private String serviceName;                // 服务名称
     private String description;                // 描述
-    private String code;                       // 服务访问凭证
-    @Column(name ="is_locked")
-    private boolean locked = false;             // 是否锁定
-    private String creator;                     // 创建人名
-    private Long creator_id;                    // 创建人id
-    private String modifier;                    // 修改人名称
-    private Long modifier_id;                   // 修改人id
+    private String creator;                    // 创建人名称
+    private Long creator_id;                   // 创建人id
+    private String modifier;                   // 修改人名称
+    private Long modifier_id;                  // 修改人id
 
 }

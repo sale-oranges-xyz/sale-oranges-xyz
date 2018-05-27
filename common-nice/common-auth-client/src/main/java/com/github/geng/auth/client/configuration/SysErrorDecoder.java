@@ -1,18 +1,14 @@
-package com.github.geng.feign.config;
+package com.github.geng.auth.client.configuration;
 
 import com.github.geng.exception.BizException;
+import com.github.geng.exception.ErrorMsg;
 import com.github.geng.exception.ServiceException;
-import com.github.geng.feign.exception.ExceptionInfo;
-import com.github.geng.response.SysExceptionMsg;
+import com.github.geng.auth.client.exception.ExceptionInfo;
 import com.github.geng.util.JSONUtils;
-import feign.FeignException;
 import feign.Response;
 import feign.Util;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-
-import java.io.IOException;
 
 /**
  * feign 调用全局异常处理
@@ -28,27 +24,31 @@ public class SysErrorDecoder implements ErrorDecoder {
 
     @Override
     public Exception decode(String methodKey, Response response) {
+        // 异常格式
+        // {"timestamp":1527398339882,"status":500,"error":"Internal Server Error","exception":"java.lang.StackOverflowError","message":"No message available","path":"/user/validate"}
         try {
             if (null != response.body()) {
                 String body = Util.toString(response.body().asReader());
-                log.error("feign调用出错,原因:{}", body);
+                log.error("feign调用异常,内容:{}", body);
                 ExceptionInfo exceptionInfo = JSONUtils.readValue(body, ExceptionInfo.class);
+
+                // 异常完整信息需要返回客户端，客户端需要根据具体异常信息做处理
+                //ErrorMsg errorMsg = new ErrorMsg(exceptionInfo.getError(), exceptionInfo.getStatus());
+
                 if (null != exceptionInfo.getException()) {
                     Class clazz = Class.forName(exceptionInfo.getException());
                     Object obj = clazz.newInstance();
 
-                    String message = exceptionInfo.getMessage();
-                    String targetMsg;
-                    if (obj instanceof BizException) { // 异常完整信息需要返回客户端，客户端需要根据具体异常信息做处理
-                        targetMsg = message.substring(message.indexOf("{"), message.indexOf("}") + 1);
-                        return JSONUtils.readValue(targetMsg, BizException.class);
-                    } else {
-                        targetMsg=message.substring(message.indexOf(":"),message.length());
-                        return new ServiceException(targetMsg);
+                    if (obj instanceof BizException) { // 系统业务逻辑方面异常
+                        // return JSONUtils.readValue(targetMsg, BizException.class);
+                        return new BizException(exceptionInfo.getError(), exceptionInfo.getStatus());
+                    } else { // 系统其它方面异常
+                        return new ServiceException(exceptionInfo.getError(), exceptionInfo.getStatus());
                     }
                 } else {
                     // 信息输出前端
                     return new ServiceException(exceptionInfo.getError(), exceptionInfo.getStatus());
+                    // return JSONUtils.createJson(errorMsg);
                 }
             }
         } catch (Exception e) {

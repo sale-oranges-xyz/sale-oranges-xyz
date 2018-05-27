@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface AllowClientRepository extends JpaRepository<AllowClient, Long> {
 
-    @Query(value = "select ac.client.code from AllowClient ac where ac.serviceId = ?1")
-    List<String> findByServiceId(Long serviceId);
+    @Query(value = "select ac.clientName from AllowClient ac where ac.client.serviceName = ?1")
+    List<String> findByServiceId(String serviceName);
 }

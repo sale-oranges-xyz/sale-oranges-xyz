@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(value = "admin-users")
 public interface AdminUserService {
 
-    @PostMapping(value = "/api/user/validate")
+    @PostMapping(value = "/user/validate")
     UserDto validate(UserLoginForm userLoginForm);
 
 }

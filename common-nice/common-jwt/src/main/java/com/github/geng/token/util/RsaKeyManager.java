@@ -16,10 +16,9 @@ import java.util.Map;
 public class RsaKeyManager {
     /**
      * 获取公钥
-     *
-     * @param filename
-     * @return
-     * @throws Exception
+     * @param filename classpath 下文件名称
+     * @return 公钥
+     * @throws Exception 
      */
     public PublicKey getPublicKey(String filename) throws Exception {
         InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -136,17 +135,17 @@ public class RsaKeyManager {
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    public static Map<String, String> generateKey(String password) throws IOException, NoSuchAlgorithmException {
+    public static Map<String, byte[]> generateKey(String password) throws IOException, NoSuchAlgorithmException {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         SecureRandom secureRandom = new SecureRandom(password.getBytes());
         keyPairGenerator.initialize(1024, secureRandom);
         KeyPair keyPair = keyPairGenerator.genKeyPair();
         byte[] publicKeyBytes = keyPair.getPublic().getEncoded();
         byte[] privateKeyBytes = keyPair.getPrivate().getEncoded();
-        Map<String, String> map = new HashMap<>();
+        Map<String, byte[]> map = new HashMap<>();
         new String(publicKeyBytes);
-        map.put("public", new String(publicKeyBytes));
-        map.put("private", new String(privateKeyBytes));
+        map.put("public", publicKeyBytes);
+        map.put("private", privateKeyBytes);
         return map;
     }
 }

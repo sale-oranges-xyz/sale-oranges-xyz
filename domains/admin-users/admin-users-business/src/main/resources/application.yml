@@ -22,7 +22,7 @@ server:
 
 eureka:
   instance:
-    statusPageUrlPath: /info
+    statusPageUrlPath: /entity
     healthCheckUrlPath: /health
     homePageUrl: http://${eureka_host:localhost}:${server.port}/
   client:

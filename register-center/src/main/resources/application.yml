@@ -8,7 +8,7 @@ server:
 eureka:
   instance:
     hostname: localhost
-    statusPageUrlPath: /info
+    statusPageUrlPath: /entity
     healthCheckUrlPath: /health
   client:
     registerWithEureka: false  #false:不作为一个客户端注册到注册中心

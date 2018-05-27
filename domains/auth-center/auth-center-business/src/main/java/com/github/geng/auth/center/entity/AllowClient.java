@@ -16,16 +16,17 @@ import javax.persistence.*;
 public class AllowClient extends BaseLongIdTimeEntity {
     private static final long serialVersionUID = 1L;
 
-    private Long serviceId;             // 服务id
+    private Long clientId;              // 可访问的服务id
     @Column(name = "is_locked")
     private boolean locked;             // 是否禁止访问
     private String clientName;          // 可访问服务名称
-    private String secretKey;           // 密钥，跟密码类似
-    private Long creatorId;             // 创建人
-    private Long modifierId;            // 修改人
+    private Long creatorId;             // 创建人id
+    private Long modifierId;            // 修改人id
+    private String creator;             // 创建人名称
+    private String modifier;            // 修改人名称
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    private ServiceClient client;     // 可访问服务
+    @JoinColumn(name = "service_id")
+    private ServiceClient client;       // 关联的服务记录
 
 }

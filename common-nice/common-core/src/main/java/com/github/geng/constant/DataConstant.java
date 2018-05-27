@@ -21,8 +21,12 @@ public class DataConstant {
      * 删除状态
      */
     public static final int DELETE = 2;
-    //=======================================
-    //提示语
+    // --------------------------------------------------------
+    // 提示语
     public static final String NO_FOUND = "查无对应记录";
-
+    // --------------------------------------------------------
+    // feign 常量
+    public static final String FROM_CLIENT = "yes";
+    public static final String CLIENT_NAME = "clientName";
+    public static final String IS_CLIENT = "isClient";
 }
