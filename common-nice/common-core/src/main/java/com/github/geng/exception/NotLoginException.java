@@ -1,6 +1,6 @@
 package com.github.geng.exception;
 
-import com.github.geng.response.RestResponseConstants;
+import com.github.geng.constant.RestResponseConstants;
 
 /**
  * @author geng

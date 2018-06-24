@@ -8,8 +8,11 @@ import com.github.geng.admin.business.service.SysUserService;
 import com.github.geng.admin.dto.SysPermissionDto;
 import com.github.geng.admin.dto.UserDto;
 import com.github.geng.admin.dto.UserLoginForm;
+import com.github.geng.constant.RestResponseConstants;
 import com.github.geng.exception.BizException;
 import com.github.geng.mvc.controller.BaseController;
+import com.github.geng.token.response.JwtAuthenticationResponse;
+import com.github.geng.token.util.JwtTokenManager;
 import com.github.geng.util.IdEncryptUtils;
 import com.github.geng.util.JSONUtils;
 import io.swagger.annotations.Api;
@@ -38,6 +41,8 @@ public class UsersController extends BaseController {
     private PermissionMapper permissionMapper;
     @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    private JwtTokenManager jwtTokenManager;
 
     @ApiOperation(value="获取用户权限列表", httpMethod = "GET", notes="用户管理api")
     @RequestMapping(value = "/permissions", method = RequestMethod.GET)
@@ -50,14 +55,16 @@ public class UsersController extends BaseController {
 
     @ApiOperation(value="用户登录", httpMethod = "POST", notes="用户管理api")
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
-    public ResponseEntity<UserDto> login(@RequestBody UserLoginForm userLoginForm) {
-        SysUser sysUser = null;
+    public ResponseEntity<?> login(@RequestBody UserLoginForm userLoginForm) {
         try {
-            sysUser = sysUserService.login(userLoginForm);
+            SysUser sysUser = sysUserService.login(userLoginForm);
+            // 获取用户token
+            String token = jwtTokenManager.generateToken(sysUser.getLoginName(), IdEncryptUtils.encode(sysUser.getId()));
+            return ResponseEntity.ok(new JwtAuthenticationResponse(token));
         } catch (BizException e) {
             log.debug("用户:{}登录异常,原因:{}", JSONUtils.createJson(userLoginForm), e.getMessage());
+            return ResponseEntity.status(RestResponseConstants.USER_UNKNOWN_ERROR).body(e.getMessage());
         }
-        return ResponseEntity.ok(sysUserMapper.entity2Dto(sysUser));
     }
 
 }

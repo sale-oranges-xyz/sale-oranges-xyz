@@ -18,7 +18,7 @@ spring:
 #    show-sql: true
 
 server:
-  port: 8080
+  port: 8082
 
 eureka:
   instance:
@@ -50,3 +50,7 @@ client:
   token-header: client-token
   expire: 60
   rsa-secret: (\^-^\)
+
+# 忽略token 验证白名单
+authorize:
+  ignore: /user/validate

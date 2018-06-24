@@ -1,11 +1,9 @@
-#### sale-orange-xyz 取首字母大写会是另外一个意思
-
 ##### 项目结构
 ```
  | - api-gateway api网关
+ | - cloud-conig 云端配置
  | - common-nice 存放项目的公用模块
-    | - common-auth-client 服务器间调用授权与客户授权模块,
-        远程调用处理
+    | - common-auth-client 服务器间调用授权与客户授权模块,远程调用处理
     | - common-core 存放封装的公用代码库
     | - common-jwt  token 相关配置
     | - common-mvc  spring mvc 相关方面的配置
@@ -19,8 +17,8 @@
     | - auth-center 微服务：鉴权中心
         | - auth-center-dto http传输数据
         | - auth-center-business 业务逻辑实现
+ | - monitor    服务监控中心
  | - register-center 服务注册中心
-        
 ```
 ##### 说明
 ```
@@ -45,6 +43,7 @@
 	而controller层传输数据都是dto(Data Transfer Object)数据。
 	为了减少重复代码，应把dto层独立成单独maven模块
 2.考虑集成flyway
+3.云端配置与消息插件整合，效率才会最优
 ```
 ##### 注意点整理
 ```
@@ -52,4 +51,5 @@
 2.启动顺序：register-center -> auth-center | admin-users -> api-gateway 
 3.项目里的feign的远程调用，是不经过网关的。
     所以一个微服务有没有权限访问其他微服，需要在各自的服务filter做处理
+    
 ```

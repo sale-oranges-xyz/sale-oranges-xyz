@@ -1,0 +1,19 @@
+spring:
+    application:
+        name: cloud-config
+    cloud:
+        config:
+            server:
+                git:
+                    uri: https://github.com/wlfewn/cloug-config.git
+
+server:
+    port: 8750 #启动端口
+
+eureka:
+    instance:
+        statusPageUrlPath: /info
+        healthCheckUrlPath: /health
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka/

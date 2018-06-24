@@ -56,7 +56,7 @@ public class JwtTokenManager implements Serializable {
     /**
      * 获取用户登陆名
      * @param token token
-     * @return
+     * @return 用户登陆名
      */
     public String getLoginNameFromToken(String token) {
         String username;
@@ -73,7 +73,7 @@ public class JwtTokenManager implements Serializable {
     /**
      * 获取token创建时间
      * @param token token
-     * @return
+     * @return token创建时间
      */
     public Date getCreatedDateFromToken(String token) {
         Date created;
@@ -90,7 +90,7 @@ public class JwtTokenManager implements Serializable {
     /**
      * 获取token过期日期
      * @param token token
-     * @return
+     * @return token过期日期
      */
     public Date getExpirationDateFromToken(String token) {
         Date expiration;
@@ -132,9 +132,9 @@ public class JwtTokenManager implements Serializable {
      * 判断token是否需要刷新
      * @param token token
      * @param lastPasswordReset 最近一次token产生时间
-     * @return
+     * @return true | false
      */
-    public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
+    public boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
         final Date created = getCreatedDateFromToken(token);
         return !isCreatedBeforeLastPasswordReset(created, lastPasswordReset)
                 && !isTokenExpired(token);
@@ -143,7 +143,7 @@ public class JwtTokenManager implements Serializable {
     /**
      * 刷新token
      * @param token 旧token
-     * @return
+     * @return 新token
      */
     public String refreshToken(String token) {
         String refreshedToken;
@@ -163,7 +163,7 @@ public class JwtTokenManager implements Serializable {
      * @param token 系统产生的token
      * @param loginName 用户登录名
      * @param passwordResetTime 最近一次token产生时间
-     * @return
+     * @return true | false
      */
     public Boolean validateToken(String token, String loginName, long passwordResetTime) {
         final String oldLoginName = getLoginNameFromToken(token);

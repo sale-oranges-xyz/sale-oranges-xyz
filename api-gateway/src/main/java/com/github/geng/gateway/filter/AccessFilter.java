@@ -1,21 +1,15 @@
 package com.github.geng.gateway.filter;
 
 import com.github.geng.admin.dto.SysPermissionDto;
-import com.github.geng.auth.client.interceptor.ClientFeignInterceptor;
-import com.github.geng.auth.client.schedule.ClientAuthSchedule;
 import com.github.geng.exception.NotLoginException;
 import com.github.geng.gateway.feign.AdminService;
-import com.github.geng.response.ApiResponseEntity;
-import com.github.geng.response.RestResponseConstants;
+import com.github.geng.constant.RestResponseConstants;
 import com.github.geng.response.SysExceptionMsg;
-import com.github.geng.token.config.ClientTokenConfig;
 import com.github.geng.token.config.UserTokenConfig;
 import com.github.geng.token.info.UserTokenInfo;
 import com.github.geng.token.util.JwtTokenManager;
 import com.github.geng.util.JSONUtils;
 import com.github.geng.util.SysStringUtil;
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.EurekaClient;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import feign.Feign;
@@ -48,14 +42,15 @@ public class AccessFilter extends ZuulFilter {
 
     @Value("${gate.ignore.startWith}")
     private String startWith;
-    @Value("${zuul.prefix}")
+    @Value("${zuul.prefix:null}")
     private String zuulPrefix;
+    @Autowired
     private AdminService adminService;
 
-    @Autowired
-    private ClientFeignInterceptor clientFeignInterceptor;
-    @Autowired
-    private EurekaClient discoveryClient;
+//    @Autowired
+//    private ClientFeignInterceptor clientFeignInterceptor;
+//    @Autowired
+//    private EurekaClient discoveryClient;
     @Autowired
     private UserTokenConfig userTokenConfig; // 用户token 配置
     @Autowired
@@ -63,12 +58,12 @@ public class AccessFilter extends ZuulFilter {
 
     @PostConstruct // 注解使用参考 https://blog.csdn.net/wo541075754/article/details/52174900
     public void init() {
-        InstanceInfo prodSvcInfo = discoveryClient.getNextServerFromEureka("admin-users", false);
+        //InstanceInfo prodSvcInfo = discoveryClient.getNextServerFromEureka("admin-users", false);
         // 设置编码格式，获取类实例
-        this.adminService = Feign.builder().encoder(new JacksonEncoder())
-                .decoder(new JacksonDecoder())
-                .requestInterceptor(clientFeignInterceptor)
-                .target(AdminService.class, prodSvcInfo.getHomePageUrl());
+        Feign.builder().encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder());
+                //.requestInterceptor(clientFeignInterceptor)
+                //.target(AdminService.class, prodSvcInfo.getHomePageUrl());
     }
     /**
      * filterType：返回一个字符串代表过滤器的类型，在zuul中定义了四种不同生命周期的过滤器类型，具体如下：
@@ -108,9 +103,16 @@ public class AccessFilter extends ZuulFilter {
      */
     @Override
     public Object run() {
+
         RequestContext context = RequestContext.getCurrentContext();
         HttpServletRequest request = context.getRequest();
-        final String requestUri = request.getRequestURI().substring(zuulPrefix.length());
+        String requestUri;
+        if (null == zuulPrefix || "null".equals(zuulPrefix)) { // 没有前缀
+            requestUri = request.getRequestURI();
+        } else {
+            requestUri = request.getRequestURI().substring(zuulPrefix.length());
+        }
+
         final String method = request.getMethod();
 
         // 拦截白名单
@@ -130,8 +132,8 @@ public class AccessFilter extends ZuulFilter {
             return null;
         }
 
-        // 获取用户权限
-        List<SysPermissionDto> permissionDtos = adminService.getUserPermissions(userTokenInfo.getId());
+        // 获取用户权限  userTokenInfo.getId()
+        List<SysPermissionDto> permissionDtos = adminService.getUserPermissions();
         if (CollectionUtils.isEmpty(permissionDtos)) {
             SysExceptionMsg message = new SysExceptionMsg("token无效",
                     System.currentTimeMillis(),

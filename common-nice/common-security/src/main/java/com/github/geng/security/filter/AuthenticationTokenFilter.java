@@ -3,6 +3,7 @@ package com.github.geng.security.filter;
 import com.github.geng.auth.client.schedule.ClientAuthSchedule;
 import com.github.geng.constant.DataConstant;
 import com.github.geng.exception.ErrorMsg;
+import com.github.geng.exception.ServiceException;
 import com.github.geng.security.entity.AuthorizeIgnore;
 import com.github.geng.token.config.ClientTokenConfig;
 import com.github.geng.token.config.UserTokenConfig;
@@ -39,6 +40,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
     @Autowired
     private AuthorizeIgnore authorizeIgnore;
 
+    // TODO 暂时不做微服务间的权限管理 , 注释部分功能未完成
     // 以后再简化这里的处理，因为这里的拦截白名单与 WebSecurityConfig 配置的拦截白名单一致
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -63,7 +65,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
             if (DataConstant.FROM_CLIENT.equals(httpRequest.getHeader(DataConstant.IS_CLIENT))) {
                 log.debug("服务端远程调用鉴权开始");
                 //获取当前服务可访问列表，与请求微服务名称比较
-                List<String> allowedClient = clientAuthSchedule.getAllowedClient();
+                // List<String> allowedClient = clientAuthSchedule.getAllowedClient();
                 String headerClientName = httpRequest.getHeader(DataConstant.CLIENT_NAME);
 
                 if (clientTokenConfig.getApplicationName().equals(headerClientName)) {
@@ -72,13 +74,18 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
                     return;
                 }
 
-                boolean result = allowedClient.stream().anyMatch(clientName -> clientName.equals(headerClientName));
-                log.debug("当前服务:{} 开始判断远程调用服务:{} 是否有访问权限。结果:{}",
-                        clientTokenConfig.getApplicationName(), headerClientName, result);
+//                boolean result = allowedClient.stream().anyMatch(clientName -> clientName.equals(headerClientName));
+//                log.debug("当前服务:{} 开始判断远程调用服务:{} 是否有访问权限。结果:{}",
+//                        clientTokenConfig.getApplicationName(), headerClientName, result);
 
                 // 调用微服务无权限访问该微服务,获取token
-                if (!result || !clientAuthSchedule.getClientToken().equals(clientAuthToken)) {
-                    log.debug("微服务:{}无权访问微服务:{},或者token无效", headerClientName, clientTokenConfig.getApplicationName());
+//                if (!result || !clientAuthSchedule.getClientToken().equals(clientAuthToken)) {
+//                    log.debug("微服务:{}无权访问微服务:{},或者token无效", headerClientName, clientTokenConfig.getApplicationName());
+//                    this.sendErrorMsg(response);
+//                    return;
+//                }
+                if (!clientAuthSchedule.getClientToken().equals(clientAuthToken)) {
+                    log.debug("微服务:{} token无效", headerClientName, clientTokenConfig.getApplicationName());
                     this.sendErrorMsg(response);
                     return;
                 }
@@ -100,10 +107,13 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 
 
     private void sendErrorMsg (ServletResponse response) throws IOException{
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json;charset=UTF-8");
-        ErrorMsg errorMsg = new ErrorMsg("无效token", HttpStatus.FORBIDDEN.value());
-        response.getWriter().print(JSONUtils.createJson(errorMsg));
+         response.setCharacterEncoding("UTF-8");
+         response.setContentType("application/json;charset=UTF-8");
+         ErrorMsg errorMsg = new ErrorMsg("无效token", HttpStatus.FORBIDDEN.value());
+         response.getWriter().print(JSONUtils.createJson(errorMsg));
+        response.getWriter().flush();
+        // 抛出服务端异常
+        // throw new ServiceException("无效token", HttpStatus.FORBIDDEN.value());
     }
 
 }

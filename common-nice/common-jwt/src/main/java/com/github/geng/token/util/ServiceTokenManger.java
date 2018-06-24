@@ -61,7 +61,7 @@ public class ServiceTokenManger {
 
     /**
      * 公钥解析token
-     * @param token
+     * @param token token
      * @return
      * @throws Exception
      */
@@ -73,8 +73,7 @@ public class ServiceTokenManger {
 
     /**
      * 公钥解析token
-     *
-     * @param token
+     * @param token token
      * @return
      * @throws Exception
      */
@@ -85,7 +84,7 @@ public class ServiceTokenManger {
     }
     /**
      * 获取token中的用户信息
-     * @param token
+     * @param token token
      * @param pubKeyPath
      * @return
      * @throws Exception
@@ -98,8 +97,7 @@ public class ServiceTokenManger {
     }
     /**
      * 获取token中的用户信息
-     *
-     * @param token
+     * @param token token
      * @param pubKey
      * @return
      * @throws Exception

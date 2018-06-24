@@ -1,4 +1,4 @@
-package com.github.geng.response;
+package com.github.geng.constant;
 
 
 /**
@@ -19,6 +19,6 @@ public class RestResponseConstants {
     /**
      * 默认客户输入异常状态码
      */
-    public static int USER_UNKNOW_ERROR = 500500;
+    public static int USER_UNKNOWN_ERROR = 500500;
 
 }
