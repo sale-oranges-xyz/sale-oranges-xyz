@@ -6,9 +6,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>admin-api-gateway</module>
         <module>common-nice</module>
         <module>register-center</module>
         <module>domains</module>
+        <module>member-api-gateway</module>
     </modules>
 
     <parent>

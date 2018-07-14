@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common-security</artifactId>
+    <description>后台管理部分的安全配置</description>
 
     <dependencies>
         <dependency>

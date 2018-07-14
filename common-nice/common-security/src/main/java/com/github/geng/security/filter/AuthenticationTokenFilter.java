@@ -3,8 +3,8 @@ package com.github.geng.security.filter;
 import com.github.geng.auth.client.schedule.ClientAuthSchedule;
 import com.github.geng.constant.DataConstant;
 import com.github.geng.exception.ErrorMsg;
-import com.github.geng.exception.ServiceException;
 import com.github.geng.security.entity.AuthorizeIgnore;
+import com.github.geng.security.extra.AuthenticationSerious;
 import com.github.geng.token.config.ClientTokenConfig;
 import com.github.geng.token.config.UserTokenConfig;
 import com.github.geng.token.util.JwtTokenManager;
@@ -21,7 +21,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * token 过滤器
@@ -34,11 +33,11 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
     @Autowired
     private ClientTokenConfig clientTokenConfig; // 客户端token
     @Autowired
-    private JwtTokenManager jwtTokenManager; // 用户端token管理工具
-    @Autowired
     private ClientAuthSchedule clientAuthSchedule;
     @Autowired
     private AuthorizeIgnore authorizeIgnore;
+    @Autowired
+    private AuthenticationSerious authenticationSerious;
 
     // TODO 暂时不做微服务间的权限管理 , 注释部分功能未完成
     // 以后再简化这里的处理，因为这里的拦截白名单与 WebSecurityConfig 配置的拦截白名单一致
@@ -91,10 +90,10 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
                 }
                 chain.doFilter(request, response);
             } else { // 用户 token 检查
-                // 看能不能解析出用户token,
+                // 看能不能根据token解析出用户
                 try {
-                    jwtTokenManager.getUserInfoFromToken(userAuthToken);
-                    // 以后考虑把用户信息放入spring securityContext
+                    // 验证接口
+                    authenticationSerious.authentication(userAuthToken);
                     chain.doFilter(request, response);
                 } catch (Exception e) {
                     String errorLog = "解析用户token:" + userAuthToken + "异常";

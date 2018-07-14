@@ -18,4 +18,12 @@ public class BaseLongIdTimeEntity extends BaseLongIdEntity {
     private Long createdTime;
     private Long modifiedTime;
 
+    // ----------------------------------------------------
+    // constructors
+    public BaseLongIdTimeEntity() {
+        super();
+    }
+    public BaseLongIdTimeEntity(Long id) {
+        super(id);
+    }
 }

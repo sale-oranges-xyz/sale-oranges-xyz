@@ -20,6 +20,8 @@
         <module>common-jwt</module>
         <module>common-auth-client</module>
         <module>common-security</module>
+        <module>common-admin-security</module>
+        <module>common-member-security</module>
     </modules>
 
 

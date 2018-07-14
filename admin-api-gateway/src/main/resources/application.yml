@@ -1,0 +1,31 @@
+#基本配置
+spring:
+  application:
+    name: admin-api-gateway
+
+server:
+  port: 5555
+
+#路由映射处理
+zuul:
+  ignored-services: "*" #忽略所有微服务，只路由指定微服务
+  # prefix: api #为zuul设置一个公共的前缀
+
+  routes:   #这里是定义拦截path与serviceId绑定
+    user:  #定义client客户端，再绑定path与serviceId,  user 是路由规则的名称，可以随意定义
+      path: /api/** #
+      serviceId: admin-users #指定需要调用的微服务id
+      #默认情况下，敏感的头信息无法经过API网关进行传递,需要开启。
+      sensitiveHeaders: "*"
+
+# 忽略白名单
+gate:
+  ignore:
+    startWith: /static,/api/user/validate
+
+client:
+  id: admin-api-gateway
+  secret: geng
+  token-header: client-token
+  expire: 60
+  rsa-secret: (\^-^\)

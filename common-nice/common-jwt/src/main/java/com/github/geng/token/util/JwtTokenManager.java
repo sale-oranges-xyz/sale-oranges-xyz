@@ -54,7 +54,7 @@ public class JwtTokenManager implements Serializable {
     }
 
     /**
-     * 获取用户登陆名
+     * 获取用户登陆名，请使用 generateToken
      * @param token token
      * @return 用户登陆名
      */
