@@ -29,4 +29,10 @@ public class DataConstant {
     public static final String FROM_CLIENT = "yes";
     public static final String CLIENT_NAME = "clientName";
     public static final String IS_CLIENT = "isClient";
+
+    // --------------------------------------------------------
+    // token 部分常量配置
+    public static final String JWT_USER_ID = "userId";
+    public static final String JWT_USER_NAME = "name";
+    
 }

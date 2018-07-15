@@ -7,7 +7,8 @@ package com.github.geng.constant;
  */
 public class RestResponseConstants {
     private RestResponseConstants() { }
-
+    // ------------------------------------------------
+    // 用户端token
     /**
      * 用户token无效
      */
@@ -20,5 +21,9 @@ public class RestResponseConstants {
      * 默认客户输入异常状态码
      */
     public static int USER_UNKNOWN_ERROR = 500500;
+
+    // ------------------------------------------------
+    // 服务端token异常
+    public static final int CLIENT_FORBIDDEN = 4403;
 
 }

@@ -1,10 +1,13 @@
 package com.github.geng.token.util;
 
-import com.github.geng.bread.NullOptional;
 import com.github.geng.exception.NotLoginException;
 import com.github.geng.token.JWTConstants;
+import com.github.geng.token.TokenService;
 import com.github.geng.token.config.UserTokenConfig;
+import com.github.geng.token.constant.TokenConstants;
+import com.github.geng.token.info.TokenInfo;
 import com.github.geng.token.info.UserTokenInfo;
+import com.github.geng.util.SysStringUtil;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +21,24 @@ import java.util.Map;
 /**
  * @author geng
  */
-@Component
 @Slf4j
-public class JwtTokenManager implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private static final String CLAIM_KEY_USERNAME = "sub";
-    private static final String CLAIM_KEY_CREATED = "created";
+@Component(value = "JwtTokenService")
+public class JwtTokenManager implements TokenService {
 
     @Autowired
     private UserTokenConfig jwtConfig;
 
-    /**
-     * 从token 中获取用户信息
-     * @param token token
-     * @return 用户信息
-     */
-    public UserTokenInfo getUserInfoFromToken(String token) {
+    @Override
+    public TokenInfo parseToken(String token) throws NotLoginException{
         try {
             final Claims claims = getClaimsFromToken(token);
             Date expiration = claims.getExpiration();
             if (expiration.before(new Date())) {
                 throw new NotLoginException("用户token已过期");
             }
-            String userId = NullOptional.getString(claims.get(JWTConstants.JWT_USER_ID));
             // 获取用户id
-            return new UserTokenInfo(userId, claims.getSubject(), expiration);
+            String userId = SysStringUtil.getStringValue(claims.get(TokenConstants.RECORD_ID));
+            return new TokenInfo(userId, claims.getSubject(), expiration);
         } catch (ExpiredJwtException e) {
             throw new NotLoginException("用户token已过期");
         } catch (SignatureException e) {
@@ -53,46 +48,32 @@ public class JwtTokenManager implements Serializable {
         }
     }
 
-    /**
-     * 获取用户登陆名，请使用 generateToken
-     * @param token token
-     * @return 用户登陆名
-     */
-    public String getLoginNameFromToken(String token) {
-        String username;
+    @Override
+    public String getName(String token) {
+        String username = null;
         try {
             final Claims claims = getClaimsFromToken(token);
             username = claims.getSubject();
         } catch (Exception e) {
-            username = null;
             log.error("根据token获取用户名失败,token:{}",token);
         }
         return username;
     }
 
-    /**
-     * 获取token创建时间
-     * @param token token
-     * @return token创建时间
-     */
-    public Date getCreatedDateFromToken(String token) {
-        Date created;
+    @Override
+    public Date getCreatedTime(String token) {
+        Date created = null;
         try {
             final Claims claims = getClaimsFromToken(token);
-            created = new Date((Long) claims.get(CLAIM_KEY_CREATED));
+            created = new Date((Long) claims.get(TokenConstants.CLAIM_KEY_CREATED));
         } catch (Exception e) {
-            created = null;
             log.error("根据token获取创建时间失败,token:{}",token);
         }
         return created;
     }
 
-    /**
-     * 获取token过期日期
-     * @param token token
-     * @return token过期日期
-     */
-    public Date getExpirationDateFromToken(String token) {
+    @Override
+    public Date getExpirationDate(String token) {
         Date expiration;
         try {
             final Claims claims = getClaimsFromToken(token);

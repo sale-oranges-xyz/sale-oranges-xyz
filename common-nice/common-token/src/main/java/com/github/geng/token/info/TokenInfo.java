@@ -15,7 +15,7 @@ import java.util.Date;
 public class UserTokenInfo {
 
     private String id;          // 用户id
-    private String userName;    // 用户名
+    private String name;        // 用户名
     private Date expireTime;    // 过期时间
 
 }
