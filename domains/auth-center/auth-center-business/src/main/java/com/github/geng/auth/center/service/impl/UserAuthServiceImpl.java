@@ -4,8 +4,7 @@ import com.github.geng.admin.dto.UserDto;
 import com.github.geng.admin.dto.UserLoginForm;
 import com.github.geng.auth.center.feign.AdminUserService;
 import com.github.geng.auth.center.service.UserAuthService;
-import com.github.geng.response.ApiResponseEntity;
-import com.github.geng.token.util.JwtTokenManager;
+import com.github.geng.token.TokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserAuthServiceImpl implements UserAuthService {
 
     @Autowired
-    private JwtTokenManager jwtTokenManager;
+    private TokenService tokenService;
     @Autowired
     private AdminUserService userService;
 
@@ -28,7 +27,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     public String auth(UserLoginForm userLoginForm) {
         UserDto userDto = userService.validate(userLoginForm);
         if (null != userDto) {
-            return jwtTokenManager.generateToken(userDto.getLoginName(), userDto.getId());
+            return tokenService.generateToken(userDto.getLoginName(), userDto.getId());
         }
         return "";
     }

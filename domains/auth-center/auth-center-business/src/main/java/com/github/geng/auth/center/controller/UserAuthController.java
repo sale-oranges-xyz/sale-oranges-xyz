@@ -1,10 +1,9 @@
 package com.github.geng.auth.center.controller;
 
 import com.github.geng.admin.dto.UserLoginForm;
-import com.github.geng.auth.center.feign.AdminUserService;
 import com.github.geng.auth.center.service.UserAuthService;
 import com.github.geng.mvc.controller.BaseController;
-import com.github.geng.token.response.JwtAuthenticationResponse;
+import com.github.geng.token.response.TokenAuthResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +26,18 @@ public class UserAuthController extends BaseController {
 
     @ApiOperation(value="用户获取token", httpMethod = "POST", notes="用户端鉴权控制中心api")
     @RequestMapping(value = "/token", method = RequestMethod.POST)
-    public ResponseEntity<JwtAuthenticationResponse>
+    public ResponseEntity<TokenAuthResponse>
             createAuthenticationToken(@RequestBody UserLoginForm userLoginForm) {
         String token =userAuthService.auth(userLoginForm);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+        return ResponseEntity.ok(new TokenAuthResponse(token));
     }
 
     @ApiOperation(value="用户刷新token", httpMethod = "POST", notes="用户端鉴权控制中心api")
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
-    public ResponseEntity<JwtAuthenticationResponse> refreshToken () {
+    public ResponseEntity<TokenAuthResponse> refreshToken () {
         String token = this.getUserToken();
         String newToken = userAuthService.refresh(token);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(newToken));
+        return ResponseEntity.ok(new TokenAuthResponse(newToken));
     }
 
 

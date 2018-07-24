@@ -26,9 +26,8 @@ public class UserTokenConfig {
     @Value("${tokenHead}")
     private String tokenHeader;
 
-    // -------------------------------------
+    // -------------------------------------------------
     // public methods
-
     /**
      * 解析token
      * @param header 请求头获取的授权信息

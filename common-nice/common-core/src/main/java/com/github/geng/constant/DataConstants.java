@@ -1,11 +1,11 @@
 package com.github.geng.constant;
 
 /**
- * 系统常量配置
+ * 系统数据常量配置
  * @author geng
  */
-public class DataConstant {
-    private DataConstant(){}
+public class DataConstants {
+    private DataConstants(){}
 
     //==================================
     //状态
@@ -24,15 +24,4 @@ public class DataConstant {
     // --------------------------------------------------------
     // 提示语
     public static final String NO_FOUND = "查无对应记录";
-    // --------------------------------------------------------
-    // feign 常量
-    public static final String FROM_CLIENT = "yes";
-    public static final String CLIENT_NAME = "clientName";
-    public static final String IS_CLIENT = "isClient";
-
-    // --------------------------------------------------------
-    // token 部分常量配置
-    public static final String JWT_USER_ID = "userId";
-    public static final String JWT_USER_NAME = "name";
-    
 }

@@ -1,7 +1,6 @@
-package com.github.geng.token.exception;
+package com.github.geng.exception;
 
-import com.github.geng.constant.RestResponseConstants;
-import com.github.geng.exception.BaseException;
+import com.github.geng.constant.ResponseConstants;
 
 /**
  * 用户登录状态异常时抛出的异常
@@ -10,7 +9,7 @@ import com.github.geng.exception.BaseException;
 public class NotLoginException extends BaseException {
 
     public NotLoginException (String message) {
-        super(message, RestResponseConstants.USER_INVALID_TOKEN);
+        super(message, ResponseConstants.USER_INVALID_TOKEN);
     }
 
 }

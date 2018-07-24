@@ -14,11 +14,12 @@ import java.util.Map;
  * created by geng
  */
 public class RsaKeyManager {
+
     /**
      * 获取公钥
      * @param filename classpath 下文件名称
      * @return 公钥
-     * @throws Exception 
+     * @throws Exception 异常信息
      */
     public PublicKey getPublicKey(String filename) throws Exception {
         InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -32,11 +33,10 @@ public class RsaKeyManager {
     }
 
     /**
-     * 获取密钥
-     *
-     * @param filename
-     * @return
-     * @throws Exception
+     * 获取私钥
+     * @param filename classpath 下文件名称
+     * @return 私钥
+     * @throws Exception 异常信息
      */
     public PrivateKey getPrivateKey(String filename) throws Exception {
         InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -51,10 +51,9 @@ public class RsaKeyManager {
 
     /**
      * 获取公钥
-     *
-     * @param publicKey
-     * @return
-     * @throws Exception
+     * @param publicKey 字节公钥信息
+     * @return 公钥
+     * @throws Exception 异常信息
      */
     public PublicKey getPublicKey(byte[] publicKey) throws Exception {
         X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKey);
@@ -101,8 +100,8 @@ public class RsaKeyManager {
 
     /**
      * 生存rsa公钥
-     *
-     * @param password
+     * @param password 密码
+     * @return 字节码公钥
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */

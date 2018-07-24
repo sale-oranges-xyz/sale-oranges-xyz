@@ -23,17 +23,4 @@ public class NullOptional {
         return mapper.apply(t);
     }
 
-    /**
-     * 检查对象是否为null
-     * @param object 传入对象
-     * @return "" | String
-     */
-    public static String getString(Object object) {
-        if (null == object) {
-            return "";
-        } else {
-            return object.toString();
-        }
-    }
-
 }

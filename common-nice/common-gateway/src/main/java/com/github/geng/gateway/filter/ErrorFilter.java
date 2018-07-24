@@ -1,4 +1,4 @@
-package com.github.geng.admin.gateway.filter;
+package com.github.geng.gateway.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;

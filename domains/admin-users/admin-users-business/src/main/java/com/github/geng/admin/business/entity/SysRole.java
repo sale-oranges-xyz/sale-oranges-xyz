@@ -1,7 +1,7 @@
 package com.github.geng.admin.business.entity;
 
 import com.github.geng.entity.BaseLongIdTimeEntity;
-import com.github.geng.constant.DataConstant;
+import com.github.geng.constant.DataConstants;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +20,7 @@ public class SysRole extends BaseLongIdTimeEntity {
 
     private String name;                    // 角色名称
     private boolean isSuperAdmin;           // 是否超级管理员
-    private int status = DataConstant.ENABLE;   // 状态
+    private int status = DataConstants.ENABLE;   // 状态
 
     //参考 https://blog.csdn.net/maoyeqiu/article/details/50401294
 //    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

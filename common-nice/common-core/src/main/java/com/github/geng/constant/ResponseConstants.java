@@ -5,8 +5,8 @@ package com.github.geng.constant;
  * 系统自定义响应状态码
  * @author geng
  */
-public class RestResponseConstants {
-    private RestResponseConstants() { }
+public class ResponseConstants {
+    private ResponseConstants() { }
     // ------------------------------------------------
     // 用户端token
     /**

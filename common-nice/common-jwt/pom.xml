@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common-jwt</artifactId>
-    <description>用户token模块配置</description>
+    <description>用户token模块配置，服务端token部分暂时废弃</description>
 
     <dependencies>
 
@@ -51,11 +51,18 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- 系统模块 -->
         <dependency>
             <groupId>com.github.geng</groupId>
             <artifactId>common-core</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>common-token</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

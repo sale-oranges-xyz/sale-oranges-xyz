@@ -7,15 +7,16 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
+ * 产生token 部分信息
  * @author geng
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserTokenInfo {
+public class TokenInfo {
 
-    private String id;          // 用户id
-    private String name;        // 用户名
-    private Date expireTime;    // 过期时间
+    private String id;          // 记录id
+    private String name;        // 记录名
+    private Date expireTime;    // token 过期时间戳, null 表示无限期
 
 }

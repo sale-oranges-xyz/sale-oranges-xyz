@@ -1,25 +1,32 @@
+#### 指导思想
+https://mp.weixin.qq.com/s/0g9oUsE6vRIpQcz4hSWXhw
+https://mp.weixin.qq.com/s/bKPCT3SivnnEXHVtAtE22A
+
 ##### 项目结构
 ```
  | - admin-api-gateway 后台管理部分api网关
  | - cloud-conig 云端配置
  | - common-nice 存放项目的公用模块
+    | - common-admin-security 后台管理部分token验证逻辑
     | - common-auth-client 服务器间调用授权与客户授权模块,远程调用处理
     | - common-core 存放封装的公用代码库
-    | - common-jwt  token 相关配置
-    | - common-mvc  spring mvc 相关方面的配置
+    | - common-feign feign 部分通用配置
+    | - common-gateway zuul网关部分通用配置
+    | - common-jwt  token 接口相关实现
+    | - common-member-security 会员端token验证逻辑
+    | - common-mvc spring mvc 相关方面的配置
     | - common-redis redis使用配置
     | - common-security 微服务通用security配置
     | - common-admin-security 微服务管理端通用security配置
     | - common-swagger 接口api说明，前后端交互使用。注意api接口包名要以*.controller命名
+    | - common-token token 部分抽象接口
  | - domains 存放实体类与业务逻辑处理
-    | - admin-users 微服务：管理用户中心
+    | - admin-users 微服务：后台管理中心
         | - admin-users-dto 用户管理传输实体类
         | - admin-users-business 业务逻辑实现
     | - auth-center 微服务：鉴权中心
         | - auth-center-dto http传输数据
         | - auth-center-business 业务逻辑实现
-    | - domains-biz-core 聚合通用业务模块的模块
-    | - domains-dto-core 聚合用于dto模块的模块
     | - member-center 微服务: 会员中心
         | - member-center-dto http传输数据
         | - member-center-biz 业务逻辑实现

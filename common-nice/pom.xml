@@ -22,6 +22,9 @@
         <module>common-security</module>
         <module>common-admin-security</module>
         <module>common-member-security</module>
+        <module>common-token</module>
+        <module>common-feign</module>
+        <module>common-gateway</module>
     </modules>
 
 

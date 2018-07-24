@@ -1,7 +1,7 @@
 package com.github.geng.admin.business.entity;
 
 import com.github.geng.entity.BaseLongIdTimeEntity;
-import com.github.geng.constant.DataConstant;
+import com.github.geng.constant.DataConstants;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +24,7 @@ public class SysUser extends BaseLongIdTimeEntity {
     private String userName;                    // 用户名
     private Long loginTime;                     // 登录时间
     private Long passwordResetTime;             // 最近一次密码修改时间
-    private int status = DataConstant.ENABLE;   // 状态
+    private int status = DataConstants.ENABLE;   // 状态
 
     //参考 https://blog.csdn.net/maoyeqiu/article/details/50401294
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch= FetchType.EAGER)

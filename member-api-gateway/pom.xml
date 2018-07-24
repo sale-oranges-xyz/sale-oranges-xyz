@@ -17,11 +17,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
-        <!--zuul网关-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zuul</artifactId>
-        </dependency>
+
         <!--系统监控-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,13 +30,26 @@
             <version>8.18.0</version>
         </dependency>
 
-        <!--系统模块-->
+        <!-- zuul 网关通用配置 -->
         <dependency>
             <groupId>com.github.geng</groupId>
-            <artifactId>common-auth-client</artifactId>
+            <artifactId>common-gateway</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- token验证部分具体逻辑 -->
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>common-jwt</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- feign 配置 -->
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>common-feign</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

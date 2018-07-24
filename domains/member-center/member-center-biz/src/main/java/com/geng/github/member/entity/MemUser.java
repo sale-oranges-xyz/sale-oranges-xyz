@@ -1,6 +1,6 @@
 package com.geng.github.member.entity;
 
-import com.github.geng.constant.DataConstant;
+import com.github.geng.constant.DataConstants;
 import com.github.geng.entity.BaseLongIdTimeEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class MemUser extends BaseLongIdTimeEntity {
     private static final long serialVersionUID = 1L;
 
     private String mobile;                      // 手机号
-    private int status = DataConstant.ENABLE;   // 状态
+    private int status = DataConstants.ENABLE;   // 状态
     private Long loginTime;                     // 最近一次登录时间
     private String nickName;                    // 会员昵称
     private String avatar;                      // 会员头像

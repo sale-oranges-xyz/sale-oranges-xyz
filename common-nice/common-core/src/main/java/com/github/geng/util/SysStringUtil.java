@@ -59,4 +59,14 @@ public class SysStringUtil extends StringUtils {
             return new String[]{ sources };
         }
     }
+
+    /**
+     * 获取对象string value
+     * @param obj 目标对象
+     * @return 空字符串 | 对象toString
+     */
+    public static String getStringValue(Object obj){
+        return obj == null ? "" : obj.toString();
+    }
+
 }

@@ -2,7 +2,7 @@ package com.github.geng.mvc.controller;
 
 import com.github.geng.token.config.UserTokenConfig;
 import com.github.geng.token.info.UserTokenInfo;
-import com.github.geng.token.util.JwtTokenManager;
+import com.github.geng.token.impl.JwtTokenManager;
 import com.github.geng.util.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

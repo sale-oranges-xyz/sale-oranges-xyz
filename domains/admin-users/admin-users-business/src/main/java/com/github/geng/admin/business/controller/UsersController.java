@@ -6,13 +6,12 @@ import com.github.geng.admin.business.mapper.PermissionMapper;
 import com.github.geng.admin.business.mapper.SysUserMapper;
 import com.github.geng.admin.business.service.SysUserService;
 import com.github.geng.admin.dto.SysPermissionDto;
-import com.github.geng.admin.dto.UserDto;
 import com.github.geng.admin.dto.UserLoginForm;
-import com.github.geng.constant.RestResponseConstants;
+import com.github.geng.constant.ResponseConstants;
 import com.github.geng.exception.BizException;
 import com.github.geng.mvc.controller.BaseController;
-import com.github.geng.token.response.JwtAuthenticationResponse;
-import com.github.geng.token.util.JwtTokenManager;
+import com.github.geng.token.response.TokenAuthResponse;
+import com.github.geng.token.impl.JwtTokenManager;
 import com.github.geng.util.IdEncryptUtils;
 import com.github.geng.util.JSONUtils;
 import io.swagger.annotations.Api;
@@ -23,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -60,10 +58,10 @@ public class UsersController extends BaseController {
             SysUser sysUser = sysUserService.login(userLoginForm);
             // 获取用户token
             String token = jwtTokenManager.generateToken(sysUser.getLoginName(), IdEncryptUtils.encode(sysUser.getId()));
-            return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+            return ResponseEntity.ok(new TokenAuthResponse(token));
         } catch (BizException e) {
             log.debug("用户:{}登录异常,原因:{}", JSONUtils.createJson(userLoginForm), e.getMessage());
-            return ResponseEntity.status(RestResponseConstants.USER_UNKNOWN_ERROR).body(e.getMessage());
+            return ResponseEntity.status(ResponseConstants.USER_UNKNOWN_ERROR).body(e.getMessage());
         }
     }
 

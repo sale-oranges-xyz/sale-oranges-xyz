@@ -1,6 +1,6 @@
 package com.github.geng.exception;
 
-import com.github.geng.constant.RestResponseConstants;
+import com.github.geng.constant.ResponseConstants;
 
 /**
  * Service 层抛出的可事务回滚异常，主要原因是客户端输入不正确
@@ -10,7 +10,7 @@ import com.github.geng.constant.RestResponseConstants;
 public class BizException extends BaseException{
 
     public BizException(String message) {
-        super(message, RestResponseConstants.USER_UNKNOWN_ERROR);
+        super(message, ResponseConstants.USER_UNKNOWN_ERROR);
     }
 
     /**

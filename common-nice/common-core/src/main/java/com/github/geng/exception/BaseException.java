@@ -1,6 +1,10 @@
 package com.github.geng.exception;
 
 /**
+ * <pre>
+ *     基本异常类，其他异常信息可由这个类派生
+ *     使用全局异常捕获时，可以使用这个类类型判断异常是否为业务异常
+ * </pre>
  * Created by geng
  */
 public class BaseException extends RuntimeException {

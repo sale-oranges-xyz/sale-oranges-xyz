@@ -2,29 +2,18 @@ package com.github.geng.admin.gateway.filter;
 
 import com.github.geng.admin.dto.SysPermissionDto;
 import com.github.geng.admin.gateway.feign.AdminService;
-import com.github.geng.exception.NotLoginException;
-import com.github.geng.constant.RestResponseConstants;
-import com.github.geng.response.SysExceptionMsg;
+import com.github.geng.exception.ForbiddenException;
+import com.github.geng.gateway.filter.AbstractAccessFilter;
 import com.github.geng.token.config.UserTokenConfig;
-import com.github.geng.token.info.UserTokenInfo;
-import com.github.geng.token.util.JwtTokenManager;
-import com.github.geng.util.JSONUtils;
-import com.github.geng.util.SysStringUtil;
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
+import com.github.geng.token.info.TokenInfo;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -37,31 +26,18 @@ import java.util.List;
  * @author geng
  */
 @Component //注入spring容器，即实例化该过滤链，否则不会生效
-@Slf4j
-public class AccessFilter extends ZuulFilter {
+public class AccessFilter extends AbstractAccessFilter {
 
-    @Value("${gate.ignore.startWith}")
-    private String startWith;
-    @Value("${zuul.prefix:null}")
-    private String zuulPrefix;
     @Autowired
     private AdminService adminService;
-
-//    @Autowired
-//    private ClientFeignInterceptor clientFeignInterceptor;
-//    @Autowired
-//    private EurekaClient discoveryClient;
     @Autowired
-    private UserTokenConfig userTokenConfig; // 用户token 配置
-    @Autowired
-    private JwtTokenManager jwtTokenManager;
+    private UserTokenConfig userTokenConfig;
 
     @PostConstruct // 注解使用参考 https://blog.csdn.net/wo541075754/article/details/52174900
     public void init() {
         //InstanceInfo prodSvcInfo = discoveryClient.getNextServerFromEureka("admin-users", false);
         // 设置编码格式，获取类实例
-        Feign.builder().encoder(new JacksonEncoder())
-                .decoder(new JacksonDecoder());
+        Feign.builder().encoder(new JacksonEncoder()).decoder(new JacksonDecoder());
                 //.requestInterceptor(clientFeignInterceptor)
                 //.target(AdminService.class, prodSvcInfo.getHomePageUrl());
     }
@@ -97,83 +73,37 @@ public class AccessFilter extends ZuulFilter {
         return true;
     }
 
-    /**
-     * 过滤器的具体逻辑
-     * @return
-     */
+    // ---------------------------------------------------------------------
+    // 真正业务逻辑
     @Override
-    public Object run() {
+    protected String getTokenHeader() {
+        return userTokenConfig.getTokenHeader();
+    }
 
-        RequestContext context = RequestContext.getCurrentContext();
-        HttpServletRequest request = context.getRequest();
-        String requestUri;
-        if (null == zuulPrefix || "null".equals(zuulPrefix)) { // 没有前缀
-            requestUri = request.getRequestURI();
-        } else {
-            requestUri = request.getRequestURI().substring(zuulPrefix.length());
-        }
+    @Override
+    protected String getRealToken(String tokenHeader) {
+        return userTokenConfig.getToken(tokenHeader);
+    }
 
-        final String method = request.getMethod();
-
-        // 拦截白名单
-        if (null != startWith && SysStringUtil.isStartWith(requestUri, startWith.split(","))) {
-            return null;
-        }
-        // 获取用户信息
-        UserTokenInfo userTokenInfo;
-        try {
-            userTokenInfo = this.getUserFromRequest(request, context);
-        } catch (Exception e) {
-            // 返回自定义错误信息
-            SysExceptionMsg message = new SysExceptionMsg(e.getMessage(),
-                    System.currentTimeMillis(),
-                    RestResponseConstants.USER_INVALID_TOKEN);
-            requestFailed(JSONUtils.createJson(message), 200, context);
-            return null;
-        }
-
+    @Override
+    protected void validateTokenInfo(TokenInfo tokenInfo, String requestUri, String requestMethod) {
         // 获取用户权限  userTokenInfo.getId()
-        List<SysPermissionDto> permissionDtos = adminService.getUserPermissions();
-        if (CollectionUtils.isEmpty(permissionDtos)) {
-            SysExceptionMsg message = new SysExceptionMsg("token无效",
-                    System.currentTimeMillis(),
-                    RestResponseConstants.USER_INVALID_TOKEN);
+        List<SysPermissionDto> permissionDtos = adminService.getUserPermissions(tokenInfo.getId());
 
-            requestFailed(JSONUtils.createJson(message), HttpStatus.OK.value(), context);
-            return null;
+        if (CollectionUtils.isEmpty(permissionDtos)) {
+            logger.debug("用户:{}权限列表为空", tokenInfo.getName());
+            throw new ForbiddenException("用户权限不足");
         }
         // 用户权限检查,控制到url与方法访问方法匹配级别 ,暂不匹配 /*
-        boolean result = permissionDtos.stream().anyMatch(sysPermission ->
-             requestUri.startsWith(sysPermission.getUrl() + "/")
-                    && method.equalsIgnoreCase(sysPermission.getMethod())
+        boolean result = permissionDtos
+                .stream()
+                .anyMatch(sysPermission -> requestUri.startsWith(sysPermission.getUrl() + "/")
+                        && requestMethod.equalsIgnoreCase(sysPermission.getMethod())
         );
         if (!result) {
-            SysExceptionMsg message = new SysExceptionMsg("用户权限不足",
-                    System.currentTimeMillis(),
-                    RestResponseConstants.USER_FORBIDDEN_TOKEN);
-            requestFailed(JSONUtils.createJson(message), HttpStatus.OK.value(), context);
-            return null;
+            logger.debug("用户:{}无uri:{},method:{}访问权限", tokenInfo.getName(), requestUri, requestMethod);
+            throw new ForbiddenException("用户权限不足");
         }
-        return null;
     }
 
-
-    // =================================================================================
-    // private methods
-    // 获取用户信息
-    private UserTokenInfo getUserFromRequest(HttpServletRequest request, RequestContext ctx) {
-        String token = request.getHeader(userTokenConfig.getTokenHeader());
-        if (!StringUtils.hasText(token)) {
-            throw new NotLoginException("用户未登录");
-        }
-        ctx.addZuulRequestHeader(userTokenConfig.getTokenHeader(), token); // 传递token 信息
-        return jwtTokenManager.getUserInfoFromToken(token);
-    }
-    // 设置网关返回
-    private void requestFailed(String body, int code, RequestContext ctx) {
-        if (null == ctx.getResponseBody()) {
-            ctx.setResponseStatusCode(code);
-            ctx.setResponseBody(body);
-        }
-    }
 }
