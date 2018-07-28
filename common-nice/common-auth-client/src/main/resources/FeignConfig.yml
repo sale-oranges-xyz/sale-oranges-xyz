@@ -1,2 +1,0 @@
-feign:
-  ignore-url: /client/access-token

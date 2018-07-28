@@ -18,13 +18,12 @@
         <module>common-swagger</module>
         <module>common-mvc</module>
         <module>common-jwt</module>
-        <module>common-auth-client</module>
         <module>common-security</module>
-        <module>common-admin-security</module>
-        <module>common-member-security</module>
         <module>common-token</module>
         <module>common-feign</module>
         <module>common-gateway</module>
+        <module>common-biz-core</module>
+        <module>common-dto-core</module>
     </modules>
 
 

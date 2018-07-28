@@ -24,4 +24,15 @@ public class DataConstants {
     // --------------------------------------------------------
     // 提示语
     public static final String NO_FOUND = "查无对应记录";
+
+    // -------------------------------------------------------
+    // 网关向内部微服务传递的请求头常量名
+    /**
+     * 用户id
+     */
+    public static final String USER_ID = "userId";
+    /**
+     * 用户名称
+     */
+    public static final String USER_NAME = "userName";
 }

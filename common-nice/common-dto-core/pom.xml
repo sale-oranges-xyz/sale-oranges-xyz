@@ -9,28 +9,27 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-admin-security</artifactId>
-    <description>spring security 管理端个性化配置</description>
+    <artifactId>common-dto-core</artifactId>
+    <description>聚合dto通用模块的模块</description>
 
     <dependencies>
-
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.github.geng</groupId>
-            <artifactId>common-security</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
+        <!-- 系统模块 -->
         <dependency>
             <groupId>com.github.geng</groupId>
-            <artifactId>common-jwt</artifactId>
+            <artifactId>common-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
+        <!--swagger配置-->
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>common-swagger</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
+
 </project>

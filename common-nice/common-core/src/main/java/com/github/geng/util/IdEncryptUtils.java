@@ -48,7 +48,7 @@ public class IdEncryptUtils {
             // 转base64，并且去掉 =
             // base64 等号一定用作后缀，且数目一定是0个、1个或2个
             String base64Str = Base64Util.encode(convertValue.toString());
-            System.out.println("转base64后：" + base64Str);
+            // System.out.println("转base64后：" + base64Str);
             if (base64Str.endsWith("==")) {
                 return base64Str.substring(0, base64Str.length() -2) + "@"; // 对应键盘shift + 2
             } else if (base64Str.endsWith("=")) {
@@ -93,10 +93,10 @@ public class IdEncryptUtils {
     }
 
 
-    public static void main(String[] args) {
-        //System.out.println(Base64Util.encode("a"));
-        String encodeStr = IdEncryptUtils.encode(10L);
-        System.out.println("编码后："+ encodeStr);
-        System.out.println(IdEncryptUtils.decode(encodeStr));
-    }
+//    public static void main(String[] args) {
+//        //System.out.println(Base64Util.encode("a"));
+//        String encodeStr = IdEncryptUtils.encode(10L);
+//        System.out.println("编码后："+ encodeStr);
+//        System.out.println(IdEncryptUtils.decode(encodeStr));
+//    }
 }

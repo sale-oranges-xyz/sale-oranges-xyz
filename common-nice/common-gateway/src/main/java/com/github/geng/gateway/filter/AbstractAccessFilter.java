@@ -1,5 +1,6 @@
 package com.github.geng.gateway.filter;
 
+import com.github.geng.constant.DataConstants;
 import com.github.geng.constant.ResponseConstants;
 import com.github.geng.exception.BaseException;
 import com.github.geng.response.SysExceptionMsg;
@@ -63,6 +64,9 @@ public abstract class AbstractAccessFilter extends ZuulFilter {
             try {
                 TokenInfo tokenInfo = tokenService.parseToken(realToken);
                 this.validateTokenInfo(tokenInfo, requestUri, request.getMethod());
+                // 用户信息写入请求头，供后续内部微服务使用
+                context.addZuulRequestHeader(DataConstants.USER_ID, tokenInfo.getId());
+                context.addZuulRequestHeader(DataConstants.USER_NAME, tokenInfo.getName());
                 return Boolean.TRUE;
             } catch (Exception e) {
                 int statusCode = ResponseConstants.USER_INVALID_TOKEN;

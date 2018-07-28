@@ -31,9 +31,9 @@ public class ListOptional {
         return list.stream().map(mapper).collect(Collectors.toList());
     }
 
-    public static void main(String[] args) {
-        List<Integer> orignalList = Arrays.asList(1);
-        List<String> targetList = ListOptional.createArrayList(orignalList, String::valueOf);
-        targetList.forEach(System.out::println);
-    }
+//    public static void main(String[] args) {
+//        List<Integer> orignalList = Arrays.asList(1);
+//        List<String> targetList = ListOptional.createArrayList(orignalList, String::valueOf);
+//        targetList.forEach(System.out::println);
+//    }
 }

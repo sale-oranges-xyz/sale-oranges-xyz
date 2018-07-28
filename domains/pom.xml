@@ -16,8 +16,6 @@
         <module>admin-users</module>
         <module>auth-center</module>
         <module>member-center</module>
-        <module>domains-biz-core</module>
-        <module>domains-dto-core</module>
     </modules>
 
 

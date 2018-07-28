@@ -1,23 +1,19 @@
-#### 指导思想
-https://mp.weixin.qq.com/s/0g9oUsE6vRIpQcz4hSWXhw
+#### 指导思想（自己写的公众号文章）
 https://mp.weixin.qq.com/s/bKPCT3SivnnEXHVtAtE22A
+https://mp.weixin.qq.com/s/0g9oUsE6vRIpQcz4hSWXhw
 
 ##### 项目结构
 ```
  | - admin-api-gateway 后台管理部分api网关
  | - cloud-conig 云端配置
  | - common-nice 存放项目的公用模块
-    | - common-admin-security 后台管理部分token验证逻辑
-    | - common-auth-client 服务器间调用授权与客户授权模块,远程调用处理
     | - common-core 存放封装的公用代码库
     | - common-feign feign 部分通用配置
     | - common-gateway zuul网关部分通用配置
     | - common-jwt  token 接口相关实现
-    | - common-member-security 会员端token验证逻辑
     | - common-mvc spring mvc 相关方面的配置
     | - common-redis redis使用配置
     | - common-security 微服务通用security配置
-    | - common-admin-security 微服务管理端通用security配置
     | - common-swagger 接口api说明，前后端交互使用。注意api接口包名要以*.controller命名
     | - common-token token 部分抽象接口
  | - domains 存放实体类与业务逻辑处理
@@ -41,29 +37,26 @@ https://mp.weixin.qq.com/s/bKPCT3SivnnEXHVtAtE22A
 	当然，也可以不这样处理，但是必须使用@ComponentScans 扫描指定包名。
 3.创建时间与修改时间使用时间戳，是因为考虑到不同时区问题
 4.service层定义接口原因：
-    (1).service方法是模块暴露给其他模块的,修改时需要特别注意 
+    (1).service方法是模块暴露给其他模块的,修改时需要特别注意
     (2).spring有两种动态代理jdk与cglib，jdk8动态代理性能提升
 5.feign层：微服务远程调用方法
 6.dto(Data Transfer Object)层：api接口传输对象,controller层之间交互
 7.一般初始化sql，放在resources下
-8.为什么实体类与业务逻辑要分成两个模块
+8.为什么实体类与业务逻辑分成两个模块
     (1).因为微服务远程调用需要用到其他项目实体类，不想重复写两套代码
     (2).重复写两套代码，维护难度加大
-9.用户部分网关与后台管理部分网关，用户验证逻辑不一致，实际情况访问量也有很大差异，拆开
+9.用户部分网关与后台管理部分网关，用户验证逻辑不一致
+  实际情况访问量也有很大差异，拆开
 ```
 ##### 项目规范
 ```
-1.spring cloud 的微服务之间调用都是通过http请求，即都是通过controller层交互。
-	而controller层传输数据都是dto(Data Transfer Object)数据。
-	为了减少重复代码，应把dto层独立成单独maven模块
-2.考虑集成flyway
-3.云端配置与消息插件整合，效率才会最优
+1.spring cloud 的微服务之间调用都是通过http请求，即都是通过controller层交
+  而controller层传输数据都是dto(Data Transfer Object)数据
+  为了减少重复代码，应把dto层独立成单独maven模块
 ```
 ##### 注意点整理
 ```
 1.@Table与@Entity区别，参考 https://www.cnblogs.com/alsf/p/7822241.html
-2.启动顺序：register-center -> auth-center | admin-users -> api-gateway 
-3.项目里的feign的远程调用，是不经过网关的。
-    所以一个微服务有没有权限访问其他微服，需要在各自的服务filter做处理
-    
+2.考虑集成flyway
+3.云端配置与消息插件整合，效率才会最优
 ```

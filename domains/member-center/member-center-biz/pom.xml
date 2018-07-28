@@ -31,7 +31,12 @@
             <artifactId>member-center-dto</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
+        <!-- 权限框架模块，可根据实际情况替换成其他 -->
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>common-security</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
