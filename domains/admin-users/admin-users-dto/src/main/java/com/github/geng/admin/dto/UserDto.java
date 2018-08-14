@@ -1,6 +1,6 @@
 package com.github.geng.admin.dto;
 
-import com.github.geng.entity.BaseIdEncryptEntity;
+import com.github.geng.entity.BaseDtoEntity;
 import com.github.geng.entity.BaseLongIdEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel("用户信息描述")
-public class UserDto extends BaseIdEncryptEntity{
+public class UserDto extends BaseDtoEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "登录名")

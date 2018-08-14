@@ -1,7 +1,7 @@
 package com.github.geng.security.filter;
 
 import com.github.geng.exception.ErrorMsg;
-import com.github.geng.util.JSONUtils;
+import com.github.geng.util.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -29,7 +29,7 @@ public class EntryPointUnauthorizedHandler implements AuthenticationEntryPoint {
         httpServletResponse.setContentType("application/json");
 
         log.debug("请求路径:{},token无效", httpServletRequest.getRequestURI());
-        httpServletResponse.getWriter().println(JSONUtils.createJson(new ErrorMsg("无效token", HttpStatus.FORBIDDEN.value())));
+        httpServletResponse.getWriter().println(JSONUtil.createJson(new ErrorMsg("无效token", HttpStatus.FORBIDDEN.value())));
         httpServletResponse.getWriter().flush();
     }
 }

@@ -6,7 +6,7 @@ import com.github.geng.exception.BaseException;
 import com.github.geng.response.SysExceptionMsg;
 import com.github.geng.token.TokenService;
 import com.github.geng.token.info.TokenInfo;
-import com.github.geng.util.JSONUtils;
+import com.github.geng.util.JSONUtil;
 import com.github.geng.util.SysStringUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -115,7 +115,7 @@ public abstract class AbstractAccessFilter extends ZuulFilter {
         if (null == ctx.getResponseBody()) {
             ctx.setResponseStatusCode(HttpStatus.OK.value());
             SysExceptionMsg sysExceptionMsg = new SysExceptionMsg(errMsg, System.currentTimeMillis(), returnCode);
-            ctx.setResponseBody(JSONUtils.createJson(sysExceptionMsg));
+            ctx.setResponseBody(JSONUtil.createJson(sysExceptionMsg));
         }
     }
 }

@@ -7,7 +7,9 @@ https://mp.weixin.qq.com/s/0g9oUsE6vRIpQcz4hSWXhw
  | - admin-api-gateway 后台管理部分api网关
  | - cloud-conig 云端配置
  | - common-nice 存放项目的公用模块
+    | - common-biz-core 聚合服务器方面通用模块
     | - common-core 存放封装的公用代码库
+    | - common-dto-core 聚合dto层方面通用配置
     | - common-feign feign 部分通用配置
     | - common-gateway zuul网关部分通用配置
     | - common-jwt  token 接口相关实现

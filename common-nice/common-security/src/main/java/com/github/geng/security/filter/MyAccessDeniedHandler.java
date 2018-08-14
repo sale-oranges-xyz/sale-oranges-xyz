@@ -1,7 +1,7 @@
 package com.github.geng.security.filter;
 
 import com.github.geng.exception.ErrorMsg;
-import com.github.geng.util.JSONUtils;
+import com.github.geng.util.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -30,7 +30,7 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
         httpServletResponse.setContentType("application/json");
 
         ErrorMsg errorMsg = new ErrorMsg("token无效", HttpStatus.FORBIDDEN.value());
-        httpServletResponse.getWriter().println(JSONUtils.createJson(errorMsg));
+        httpServletResponse.getWriter().println(JSONUtil.createJson(errorMsg));
         httpServletResponse.getWriter().flush();
     }
 }

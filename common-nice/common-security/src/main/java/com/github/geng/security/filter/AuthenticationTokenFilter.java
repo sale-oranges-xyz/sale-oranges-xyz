@@ -3,7 +3,7 @@ package com.github.geng.security.filter;
 import com.github.geng.exception.ErrorMsg;
 import com.github.geng.security.entity.AuthorizeIgnore;
 import com.github.geng.security.extra.AuthenticationSerious;
-import com.github.geng.util.JSONUtils;
+import com.github.geng.util.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,7 +44,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
         ErrorMsg errorMsg = new ErrorMsg("无效token", HttpStatus.FORBIDDEN.value());
-        response.getWriter().print(JSONUtils.createJson(errorMsg));
+        response.getWriter().print(JSONUtil.createJson(errorMsg));
         response.getWriter().flush();
     }
 }

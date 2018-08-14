@@ -13,7 +13,7 @@ import com.github.geng.mvc.controller.BaseController;
 import com.github.geng.token.response.TokenAuthResponse;
 import com.github.geng.token.impl.JwtTokenManager;
 import com.github.geng.util.IdEncryptUtils;
-import com.github.geng.util.JSONUtils;
+import com.github.geng.util.JSONUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -60,7 +60,7 @@ public class UsersController extends BaseController {
             String token = jwtTokenManager.generateToken(sysUser.getLoginName(), IdEncryptUtils.encode(sysUser.getId()));
             return ResponseEntity.ok(new TokenAuthResponse(token));
         } catch (BizException e) {
-            log.debug("用户:{}登录异常,原因:{}", JSONUtils.createJson(userLoginForm), e.getMessage());
+            log.debug("用户:{}登录异常,原因:{}", JSONUtil.createJson(userLoginForm), e.getMessage());
             return ResponseEntity.status(ResponseConstants.USER_UNKNOWN_ERROR).body(e.getMessage());
         }
     }

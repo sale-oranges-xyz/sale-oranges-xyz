@@ -13,18 +13,20 @@ import java.io.Serializable;
 @MappedSuperclass
 @Setter
 @Getter
-public class BaseIdEncryptEntity implements Serializable {
+public class BaseDtoEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String id;
 
     // ==========================================================
     // constructor
-    public BaseIdEncryptEntity (BaseLongIdEntity baseLongIdEntity) {
+    public BaseDtoEntity(BaseLongIdEntity baseLongIdEntity) {
+        super();
         this.id = IdEncryptUtils.encode(baseLongIdEntity.getId());
     }
-    public BaseIdEncryptEntity () {
 
+    public BaseDtoEntity() {
+        super();
     }
 
 }

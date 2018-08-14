@@ -1,4 +1,4 @@
-package com.github.geng.page;
+package com.github.geng.mvc.resolver;
 
 import com.github.geng.util.ConverterUtils;
 import org.springframework.core.MethodParameter;

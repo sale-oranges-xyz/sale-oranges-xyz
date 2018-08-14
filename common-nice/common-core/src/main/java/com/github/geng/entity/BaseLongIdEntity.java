@@ -36,6 +36,7 @@ public class BaseLongIdEntity implements Serializable {
         super();
     }
     public BaseLongIdEntity(Long id) {
+        super();
         this.id = id;
     }
 }

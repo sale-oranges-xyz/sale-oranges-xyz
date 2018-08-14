@@ -9,7 +9,12 @@ import java.util.UUID;
 public class SerialNumberUtils {
     private SerialNumberUtils(){}
 
+    /**
+     * 获取 uuid
+     * @return uuid
+     */
     public static String createUUID(){
         return UUID.randomUUID().toString().replace("-","");
     }
+
 }

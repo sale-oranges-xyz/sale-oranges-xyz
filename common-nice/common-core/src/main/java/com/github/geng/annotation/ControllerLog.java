@@ -1,14 +1,12 @@
 package com.github.geng.annotation;
 
-import org.springframework.core.annotation.AliasFor;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 用于controller上的注解，主要做日志统计需要
+ * 用于controller上的注解，主要做日志记录
  * 参考 https://github.com/timebusker/Java-Annotation/blob/master/src/main/java/cn/timebusker/annotation/Timebusker.java
  * <pre>
  *      @Target：设定注解的作用域：

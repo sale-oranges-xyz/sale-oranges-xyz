@@ -1,8 +1,10 @@
 package com.github.geng.mvc;
 
-import com.github.geng.page.PageArgumentResolver;
+import com.github.geng.mvc.interceptor.RequestInterceptor;
+import com.github.geng.mvc.resolver.PageArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
@@ -16,11 +18,22 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 分页数据获取处理
-     * @param argumentResolvers
+     * @param argumentResolvers 参数处理器集合
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new PageArgumentResolver());
+        super.addArgumentResolvers(argumentResolvers);
+    }
+
+    /**
+     * 拦截器处理操作
+     * @param registry 拦截器集合
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new RequestInterceptor());
+        super.addInterceptors(registry);
     }
 
 }

@@ -14,7 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
  */
 @Configuration
 @EnableWebSecurity // 启动security
-public class CommonWebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SimpleWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 白名单，验证忽略

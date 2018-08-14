@@ -16,7 +16,6 @@ public class ListOptional {
 
     /**
      *  封装list steam的map转换流
-     *  <pre></pre>
      * @param list 输入集合
      * @param mapper map处理
      * @param <T> 输入list数据类型

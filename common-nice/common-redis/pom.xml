@@ -25,5 +25,18 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- 系统模块 -->
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>common-cache</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>common-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 </project>
