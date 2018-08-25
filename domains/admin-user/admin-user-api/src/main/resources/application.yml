@@ -1,0 +1,21 @@
+
+spring:
+  application:
+    name: admin-user
+  datasource:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/common_admin_users?useUnicode=true&characterEncoding=utf8
+      username: geng
+      password: 123
+
+server:
+  port: 8080
+
+eureka:
+  instance:
+    statusPageUrlPath: /entity
+    healthCheckUrlPath: /health
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/

@@ -2,9 +2,7 @@ package com.github.geng.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 
@@ -14,21 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
  */
 @Configuration
 @EnableWebSecurity // 启动security
-public class SimpleWebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SimpleWebSecurityConfig extends AbstractWebSecurityConfig {
 
-    /**
-     * 白名单，验证忽略
-     */
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**/*.css",
-                "/**/*.js",
-                "/**/*.png",
-                "/**/*.jpg",
-                "/**/fonts/**",
-                "/images/**",
-                "/**/*.ico");
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

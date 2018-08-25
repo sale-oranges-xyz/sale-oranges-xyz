@@ -8,3 +8,15 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+
+# 消息配置
+spring:
+  cloud:
+    config:
+      name: cloud-licent
+      profile: test
+      uri: http://localhost:7070/
+      label: master
+
+# 关闭安全验证
+management.security.enabled: false

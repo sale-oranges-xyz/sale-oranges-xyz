@@ -1,0 +1,45 @@
+
+spring.application.name: spring-config-server
+
+
+spring:
+### 数据库配置
+  datasource:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/common_config_server?useUnicode=true&characterEncoding=utf8
+      username: geng
+      password: 123
+
+
+#### spring config server 配置
+spring.cloud.config.label: master
+## 开启jdbc 查询
+spring.profiles.active: jdbc
+# spring.cloud.config.server.jdbc: true
+## 重写查询 sql
+spring.cloud.config.server.jdbc.sql: SELECT `key`, `value` from sys_properties where application=? and profile=? and lable=?
+# 关闭安全验证
+management.security.enabled: false
+
+# 服务端口
+server.port: 7070
+
+## kafka 配置
+spring.kafka.bootstrap-servers: 127.0.0.1:9092
+spring.kafka.consumer.group-id: config-server
+spring.kafka.consumer.key-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+spring.kafka.consumer.value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+spring.kafka.producer.key-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+spring.kafka.producer.value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+
+
+### 服务注册中心配置
+eureka:
+  instance:
+    statusPageUrlPath: /entity
+    healthCheckUrlPath: /health
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/

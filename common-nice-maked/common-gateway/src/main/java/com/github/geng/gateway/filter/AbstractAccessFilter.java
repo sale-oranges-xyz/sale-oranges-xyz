@@ -3,7 +3,7 @@ package com.github.geng.gateway.filter;
 import com.github.geng.constant.DataConstants;
 import com.github.geng.constant.ResponseConstants;
 import com.github.geng.exception.BaseException;
-import com.github.geng.response.SysExceptionMsg;
+import com.github.geng.response.ApiResponseData;
 import com.github.geng.token.TokenService;
 import com.github.geng.token.info.TokenInfo;
 import com.github.geng.util.JSONUtil;
@@ -45,6 +45,7 @@ public abstract class AbstractAccessFilter extends ZuulFilter {
     public Object run() {
         RequestContext context = RequestContext.getCurrentContext();
         HttpServletRequest request = context.getRequest();
+        // System.out.printf("content-type: "+ request.getContentType());
         String requestUri;
         if (null == zuulPrefix || "null".equals(zuulPrefix)) { // 没有前缀
             requestUri = request.getRequestURI();
@@ -114,8 +115,7 @@ public abstract class AbstractAccessFilter extends ZuulFilter {
     protected void sendErrMsg(String errMsg, int returnCode, RequestContext ctx) {
         if (null == ctx.getResponseBody()) {
             ctx.setResponseStatusCode(HttpStatus.OK.value());
-            SysExceptionMsg sysExceptionMsg = new SysExceptionMsg(errMsg, System.currentTimeMillis(), returnCode);
-            ctx.setResponseBody(JSONUtil.createJson(sysExceptionMsg));
+            ctx.setResponseBody(JSONUtil.createJson(new ApiResponseData<>(returnCode, errMsg)));
         }
     }
 }

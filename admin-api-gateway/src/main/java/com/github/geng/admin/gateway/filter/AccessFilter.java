@@ -32,14 +32,14 @@ public class AccessFilter extends AbstractAccessFilter {
     private UserTokenConfig userTokenConfig;
     private SysPermissionService permissionService;
 
-    @PostConstruct // 注解使用参考 https://blog.csdn.net/wo541075754/article/details/52174900
-    public void init() {
+    // @PostConstruct // 注解使用参考 https://blog.csdn.net/wo541075754/article/details/52174900
+    // public void init() {
         //InstanceInfo prodSvcInfo = discoveryClient.getNextServerFromEureka("admin-users", false);
         // 设置编码格式，获取类实例
-        Feign.builder().encoder(new JacksonEncoder()).decoder(new JacksonDecoder());
+        // Feign.builder().encoder(new JacksonEncoder()).decoder(new JacksonDecoder());
                 //.requestInterceptor(clientFeignInterceptor)
                 //.target(AdminService.class, prodSvcInfo.getHomePageUrl());
-    }
+    // }
     /**
      * filterType：返回一个字符串代表过滤器的类型，在zuul中定义了四种不同生命周期的过滤器类型，具体如下：
      * pre：可以在请求被路由之前调用

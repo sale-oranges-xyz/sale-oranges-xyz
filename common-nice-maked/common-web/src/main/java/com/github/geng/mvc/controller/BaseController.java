@@ -3,7 +3,7 @@ package com.github.geng.mvc.controller;
 import com.github.geng.base.UserInterface;
 import com.github.geng.constant.DataConstants;
 import com.github.geng.exception.NotLoginException;
-import com.github.geng.mvc.util.RequestUtils;
+import com.github.geng.mvc.util.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -22,7 +22,7 @@ public class BaseController {
      */
     protected UserInterface getUserInfo() {
         // 获取token
-        HttpServletRequest request = RequestUtils.getRequest();
+        HttpServletRequest request = RequestUtil.getRequest();
         String userId = request.getHeader(DataConstants.USER_ID);
         String userName = request.getHeader(DataConstants.USER_NAME);
         if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(userName)) {

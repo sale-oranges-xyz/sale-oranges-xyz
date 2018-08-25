@@ -19,6 +19,7 @@
         <module>admin-user-core</module>
         <module>admin-user-dto</module>
         <module>admin-user-remote</module>
+        <module>admin-user-gateway</module>
     </modules>
 
 

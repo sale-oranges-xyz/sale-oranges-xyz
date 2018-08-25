@@ -59,24 +59,23 @@ public class RequestInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, Exception ex) throws Exception {
         if (handler instanceof HandlerMethod) {
-            long startTime = (Long) httpServletRequest.getAttribute("startTime");
+            long startTime = (Long) httpServletRequest.getAttribute("logStartTime");
             long endTime = System.currentTimeMillis();
             long executeTime = endTime - startTime;
             HandlerMethod h = (HandlerMethod) handler;
             StringBuilder sb = new StringBuilder(1000);
             // 如果需要输出json 格式，这里拼接
             sb.append("URI: ").append(httpServletRequest.getRequestURI()).append(" ");
-            sb.append("Controller: ").append(h.getBean().getClass().getName()).append(" ");
-            sb.append("Method: ").append(h.getMethod().getName()).append(" ");
-            sb.append("paramsTypes: ");
+            sb.append(" ").append(h.getBean().getClass().getName());
+            sb.append(".").append(h.getMethod().getName()).append("(");
             Class<?>[] parameterTypes = h.getMethod().getParameterTypes();
             for (Class clazz : parameterTypes) {
                 sb.append(clazz.getName());
                 sb.append(",");
             }
             sb = sb.deleteCharAt(sb.length() - 1); // 去掉末尾 ,
-            sb.append(" ");
-            sb.append(String.format("执行时间: %s ms", executeTime)).append("\n");
+            sb.append(")");
+            sb.append(String.format("执行时间: %s ms", executeTime));
             log.debug(sb.toString());
         }
     }

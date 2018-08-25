@@ -8,7 +8,7 @@ https://mp.weixin.qq.com/s/ERxlPKjuX8nWB2awHVZrlQ
  | - admin-api-gateway 后台管理部分api网关
  | - common-nice-maked 存放项目的公用模块
     | - common-biz-core 聚合服务器方面通用模块
-	| - common-base-core 父模块，用于控制spring cloud版本号，其他微服务必须继承该模块
+    | - common-base-core 父模块，用于控制spring cloud版本号，其他微服务必须继承该模块
     | - common-core 存放封装的公用代码库
     | - common-feign feign 部分通用配置
     | - common-gateway zuul网关部分通用配置
@@ -17,18 +17,19 @@ https://mp.weixin.qq.com/s/ERxlPKjuX8nWB2awHVZrlQ
     | - common-security 微服务通用security配置
     | - common-swagger 接口api说明，前后端交互使用。注意api接口包名要以*.controller命名
     | - common-token token 部分抽象接口
-	| - common-web web 部分通用代码
+    | - common-web web 部分通用代码
  | - domains 存放实体类与业务逻辑处理
     | - admin-user 微服务：后台管理中心
-	    | - admin-user-api 管理员api访问模块
-		| - admin-user-core 领域模型数据
+        | - admin-user-api 管理员api访问模块
+        | - admin-user-core 领域模型数据
         | - admin-user-dto 用户管理dto模块
         | - admin-user-remote 暴露可供远程访问方法
     | - member-user 微服务: 会员中心
-	    | - member-user-api 会员api访问模块
-		| - member-user-core 领域模型数据
+        | - member-user-api 会员api访问模块
+        | - member-user-core 领域模型数据
         | - member-user-dto 会员dto模块
         | - member-user-remote 暴露可供远程访问方法
+ | - config-server-center 配置中心
  | - member-api-gateway  前端用户部分api网关
  | - register-center 服务注册中心
 ```

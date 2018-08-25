@@ -22,7 +22,7 @@ public class ListOptional {
      * @param <U> 返回list的数据类型
      * @return 转换后的ArrayList
      */
-    public static <T,U> List<U> createArrayList(List<T> list, Function<? super T, ? extends U> mapper) {
+    public static <T,U> List<U> mapToArrayList(List<T> list, Function<? super T, ? extends U> mapper) {
         if (CollectionUtils.isEmpty(list)) {
             return new ArrayList<>();
         }
@@ -32,7 +32,7 @@ public class ListOptional {
 
 //    public static void main(String[] args) {
 //        List<Integer> orignalList = Arrays.asList(1);
-//        List<String> targetList = ListOptional.createArrayList(orignalList, String::valueOf);
+//        List<String> targetList = ListOptional.mapToArrayList(orignalList, String::valueOf);
 //        targetList.forEach(System.out::println);
 //    }
 }

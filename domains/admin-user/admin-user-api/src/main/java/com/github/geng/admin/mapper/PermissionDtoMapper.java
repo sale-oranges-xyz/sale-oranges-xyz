@@ -20,7 +20,7 @@ public class PermissionDtoMapper {
      * @return list dto
      */
     public List<SysPermissionDto> entityListToDtoList(List<SysPermission> sysPermissionList) {
-        return ListOptional.createArrayList(sysPermissionList, sysPermission -> {
+        return ListOptional.mapToArrayList(sysPermissionList, sysPermission -> {
             SysPermissionDto permissionDto = new SysPermissionDto(sysPermission);
             BeanUtils.copyProperties(sysPermission, permissionDto,  "id");
             return permissionDto;

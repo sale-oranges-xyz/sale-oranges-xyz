@@ -11,9 +11,9 @@ import java.util.Optional;
  *  request请求工具类
  *  参考 https://www.cnblogs.com/thankyouGod/p/6064165.html
  */
-public class RequestUtils {
+public class RequestUtil {
 
-    private RequestUtils(){}
+    private RequestUtil(){}
 
     /**
      * 获取当前请求HttpServletRequest

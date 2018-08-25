@@ -1,6 +1,5 @@
 package com.github.geng.admin.service.impl;
 
-import com.github.geng.admin.entity.SysPermission;
 import com.github.geng.admin.repository.SysUserRepository;
 import com.github.geng.admin.service.SysUserService;
 import com.github.geng.admin.entity.SysUser;
@@ -22,9 +21,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class SysUserServiceImpl implements SysUserService {
 
-    @Autowired
     private SysUserRepository userRepository;
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -50,4 +47,14 @@ public class SysUserServiceImpl implements SysUserService {
         throw new BizException("用户名密码错误");
     }
 
+    // -------------------------------------------------------------
+    @Autowired
+    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @Autowired
+    public void setUserRepository(SysUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 }
