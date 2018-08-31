@@ -15,5 +15,4 @@ public interface SysPermissionService {
      * @return 权限列表
      */
     List<SysPermission> findUserPermission(long userId);
-
 }

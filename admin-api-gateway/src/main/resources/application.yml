@@ -2,11 +2,6 @@
 spring:
   application:
     name: admin-api-gateway
-  datasource:
-      driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/common_admin_users?useUnicode=true&characterEncoding=utf8
-      username: geng
-      password: 123
 
 server:
   port: 5555
@@ -15,7 +10,6 @@ server:
 zuul:
   ignored-services: "*" #忽略所有微服务，只路由指定微服务
   # prefix: api #为zuul设置一个公共的前缀
-
   routes:   #这里是定义拦截path与serviceId绑定
     user:  #定义client客户端，再绑定path与serviceId,  user 是路由规则的名称，可以随意定义
       path: /api/** #
@@ -28,4 +22,6 @@ gate:
   ignore:
     startWith: /static,/api/user/validate,/test
 
-
+## redis 配置
+spring.redis.cluster.nodes[0]: 127.0.0.1:6379
+spring.redis.cluster.password: 123456

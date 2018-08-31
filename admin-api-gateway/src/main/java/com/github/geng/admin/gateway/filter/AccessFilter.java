@@ -1,21 +1,20 @@
 package com.github.geng.admin.gateway.filter;
 
-import com.github.geng.admin.entity.SysPermission;
-import com.github.geng.admin.service.SysPermissionService;
+import com.github.geng.admin.gateway.config.UrlMatcher;
+import com.github.geng.admin.redis.config.AdminUserRedisConfig;
+import com.github.geng.admin.redis.entity.RedisRole;
+import com.github.geng.admin.redis.template.PermissionRoleTemplate;
+import com.github.geng.admin.redis.template.UserRoleTemplate;
 import com.github.geng.exception.ForbiddenException;
 import com.github.geng.gateway.filter.AbstractAccessFilter;
 import com.github.geng.token.config.UserTokenConfig;
 import com.github.geng.token.info.TokenInfo;
-import com.github.geng.util.IdEncryptUtils;
-import feign.Feign;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
+
 
 /**
  * <pre>
@@ -30,8 +29,9 @@ import java.util.List;
 public class AccessFilter extends AbstractAccessFilter {
 
     private UserTokenConfig userTokenConfig;
-    private SysPermissionService permissionService;
-
+    private PermissionRoleTemplate permissionRoleTemplate;
+    private UserRoleTemplate userRoleTemplate;
+    private UrlMatcher urlMatcher;
     // @PostConstruct // 注解使用参考 https://blog.csdn.net/wo541075754/article/details/52174900
     // public void init() {
         //InstanceInfo prodSvcInfo = discoveryClient.getNextServerFromEureka("admin-users", false);
@@ -87,19 +87,39 @@ public class AccessFilter extends AbstractAccessFilter {
     @Override
     protected void validateTokenInfo(TokenInfo tokenInfo, String requestUri, String requestMethod) {
         // 获取用户权限  userTokenInfo.getId()
-        List<SysPermission> userPermissionList
-                = permissionService.findUserPermission(IdEncryptUtils.decode(tokenInfo.getId()));
+        // 这里的requestUri需要处理，因为是restful风格，部分内容需要还原
+        String patternUrl = urlMatcher.findPattern(requestUri);
+        // 根据权限查找角色
+        String permissionKey = AdminUserRedisConfig.createPermissionKey(patternUrl, requestMethod);
+        List<RedisRole> permissionRoleList = this.permissionRoleTemplate.findAllOpsList(permissionKey);
+        // 根据用户查找角色
+        String adminKey = AdminUserRedisConfig.createAdminKey(tokenInfo.getId());
+        List<RedisRole> userRoleList = this.userRoleTemplate.findAllOpsList(adminKey);
 
-        if (CollectionUtils.isEmpty(userPermissionList)) {
+        if (CollectionUtils.isEmpty(userRoleList)) {
             logger.debug("用户:{}权限列表为空", tokenInfo.getName());
             throw new ForbiddenException("用户权限不足");
         }
-        // 用户权限检查,控制到url与方法访问方法匹配级别 ,暂不匹配 /*
-        boolean result = userPermissionList
-                .stream()
-                .anyMatch(sysPermission -> requestUri.startsWith(sysPermission.getUrl() + "/")
-                        && requestMethod.equalsIgnoreCase(sysPermission.getMethod())
-        );
+
+        // 用户权限检查,控制到url与方法访问方法匹配级别
+        boolean result = false;
+        // 判断两个集合是否有相同的角色
+        for (RedisRole userRole : userRoleList) {
+            if (userRole.isSuperAdmin()) { // 超级管理员，什么都可以访问
+                result = true;
+                break;
+            }
+            for (RedisRole permissionRole: permissionRoleList) {
+                if (permissionRole.getName().equals(userRole.getName())) {
+                    result = true;
+                    break;
+                }
+            }
+            if (result) {
+                break;
+            }
+        }
+
         if (!result) {
             logger.debug("用户:{}无uri:{},method:{}访问权限", tokenInfo.getName(), requestUri, requestMethod);
             throw new ForbiddenException("用户权限不足");
@@ -113,7 +133,15 @@ public class AccessFilter extends AbstractAccessFilter {
         this.userTokenConfig = userTokenConfig;
     }
     @Autowired
-    public void setPermissionService(SysPermissionService permissionService) {
-        this.permissionService = permissionService;
+    public void setUserRoleTemplate(UserRoleTemplate userRoleTemplate) {
+        this.userRoleTemplate = userRoleTemplate;
+    }
+    @Autowired
+    public void setPermissionRoleTemplate(PermissionRoleTemplate permissionRoleTemplate) {
+        this.permissionRoleTemplate = permissionRoleTemplate;
+    }
+    @Autowired
+    public void setUrlMatcher(UrlMatcher urlMatcher) {
+        this.urlMatcher = urlMatcher;
     }
 }

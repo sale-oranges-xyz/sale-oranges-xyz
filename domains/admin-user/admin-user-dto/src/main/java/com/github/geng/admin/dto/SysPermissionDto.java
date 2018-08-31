@@ -5,6 +5,7 @@ import com.github.geng.entity.BaseLongIdEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 /**
  * @author geng
@@ -35,6 +36,7 @@ public class SysPermissionDto extends BaseDtoEntity {
     // 多态使用
     public SysPermissionDto (BaseLongIdEntity baseLongIdEntity) {
         super(baseLongIdEntity);
+        BeanUtils.copyProperties(baseLongIdEntity, this, "id");
     }
 
 }

@@ -5,6 +5,7 @@ import com.github.geng.entity.BaseLongIdEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 /**
  * @author geng
@@ -28,6 +29,7 @@ public class UserDto extends BaseDtoEntity {
     }
     public UserDto(BaseLongIdEntity baseLongIdEntity) {
         super(baseLongIdEntity);
+        BeanUtils.copyProperties(baseLongIdEntity, this, "id");
     }
 
 }

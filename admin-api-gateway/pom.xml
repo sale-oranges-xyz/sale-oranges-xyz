@@ -50,11 +50,11 @@
 
         <!--系统模块-->
         <!-- feign 配置 -->
-        <dependency>
-            <groupId>com.github.geng</groupId>
-            <artifactId>common-feign</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.github.geng</groupId>-->
+            <!--<artifactId>common-feign</artifactId>-->
+            <!--<version>1.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.github.geng</groupId>
@@ -76,13 +76,12 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <!-- 用户api部分 -->
+        <!-- 用户redis部分 -->
         <dependency>
             <groupId>com.github.geng</groupId>
-            <artifactId>admin-user-gateway</artifactId>
+            <artifactId>admin-user-redis</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 
     <build>

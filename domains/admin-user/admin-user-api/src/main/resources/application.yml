@@ -19,3 +19,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+
+## redis 配置
+spring.redis.cluster.nodes[0]: 127.0.0.1:6379
+spring.redis.cluster.password: 123456

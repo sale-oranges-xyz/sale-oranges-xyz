@@ -14,11 +14,7 @@ public class SysUserDtoMapper {
 
     // entity 转 传输数据 dto
     public UserDto entity2Dto(SysUser sysUser) {
-        return NullOptional.validate(sysUser, (user) -> {
-            UserDto userDto = new UserDto(user);
-            BeanUtils.copyProperties(user, userDto);
-            return userDto;
-        });
+        return NullOptional.validate(sysUser, UserDto::new);
     }
 
 }

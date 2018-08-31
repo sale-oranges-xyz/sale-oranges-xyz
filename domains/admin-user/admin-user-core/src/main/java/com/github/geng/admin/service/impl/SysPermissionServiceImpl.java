@@ -4,8 +4,8 @@ import com.github.geng.admin.entity.SysPermission;
 import com.github.geng.admin.repository.SysPermissionRepository;
 import com.github.geng.admin.service.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ public class SysPermissionServiceImpl implements SysPermissionService {
 
     private SysPermissionRepository sysPermissionRepository;
 
+
     @Override
-    @Cacheable(value = "findUserPermission",key = "#userId")
+    // @Cacheable(value = "findUserPermission",key = "#userId")
     public List<SysPermission> findUserPermission(long userId) {
         return sysPermissionRepository.findByUserId(userId);
     }
-
 
     // ---------------------------------------------------------------
     // setters

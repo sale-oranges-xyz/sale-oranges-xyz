@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RedisServiceImpl implements ICacheService {
 
-    private RedisTemplate<String, String> redisTemplate;
+    private StringRedisTemplate redisTemplate;
 
     @Override
     public <T> Optional<T> get(String key, Class<T> clazz) {
@@ -104,7 +105,7 @@ public class RedisServiceImpl implements ICacheService {
     // -------------------------------------------------------------------------------------------
     // setters
     @Autowired
-    public void setRedisTemplate(RedisTemplate<String, String> redisTemplate) {
+    public void setRedisTemplate(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 }

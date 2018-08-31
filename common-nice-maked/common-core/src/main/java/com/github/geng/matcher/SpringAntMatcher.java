@@ -8,6 +8,7 @@ import org.springframework.util.AntPathMatcher;
  */
 public class SpringAntMatcher {
     // AntPathMatcher 源码解读，参考 https://www.cnblogs.com/zhangxiaoguang/p/5855113.html
+    //                               https://blog.csdn.net/zxy861114/article/details/51459077
     private final AntPathMatcher antMatcher;
     private final String pattern;
     // ------------------------------------------------------------
@@ -35,5 +36,10 @@ public class SpringAntMatcher {
         matcher.setTrimTokens(false);
         matcher.setCaseSensitive(caseSensitive);
         return matcher;
+    }
+    // -------------------------------------------------------------
+    // getter
+    public String getPattern() {
+        return pattern;
     }
 }

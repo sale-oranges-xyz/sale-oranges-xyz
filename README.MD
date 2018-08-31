@@ -1,7 +1,8 @@
-#### 指导思想（自己写的公众号文章）
-https://mp.weixin.qq.com/s/bKPCT3SivnnEXHVtAtE22A   
-https://mp.weixin.qq.com/s/0g9oUsE6vRIpQcz4hSWXhw   
-https://mp.weixin.qq.com/s/ERxlPKjuX8nWB2awHVZrlQ   
+#### 指导思想
+认识HTTP响应状态: https://mp.weixin.qq.com/s/bKPCT3SivnnEXHVtAtE22A   
+我理解的微服务系统: https://mp.weixin.qq.com/s/0g9oUsE6vRIpQcz4hSWXhw   
+设计一个微服务用户API网关: https://mp.weixin.qq.com/s/ERxlPKjuX8nWB2awHVZrlQ   
+分布式事务解决方案: http://springcloud.cn/view/374  
 
 ##### 项目结构
 ```
@@ -23,6 +24,7 @@ https://mp.weixin.qq.com/s/ERxlPKjuX8nWB2awHVZrlQ
         | - admin-user-api 管理员api访问模块
         | - admin-user-core 领域模型数据
         | - admin-user-dto 用户管理dto模块
+        | - admin-user-redis 用户管理redis模块
         | - admin-user-remote 暴露可供远程访问方法
     | - member-user 微服务: 会员中心
         | - member-user-api 会员api访问模块
