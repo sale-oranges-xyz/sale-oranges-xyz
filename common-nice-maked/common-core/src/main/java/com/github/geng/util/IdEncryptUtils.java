@@ -135,12 +135,11 @@ public class IdEncryptUtils {
          return -1L;
      }
 
-//    public static void main(String[] args) {
-//        //System.out.println(Base64Util.encode("a"));
-//        String encodeStr = IdEncryptUtils.encode(11L);
-//        System.out.println("编码后："+ encodeStr);
-//        System.out.println(IdEncryptUtils.decode(encodeStr));
-//    }
+    public static void main(String[] args) {
+        //System.out.println(Base64Util.encode("a"));
+        String encodeStr = IdEncryptUtils.encode(1L);
+        System.out.println("编码后："+ encodeStr);
+    }
 
 //     public static void main(String[] args) {
 //         Hashids hashids = new Hashids(hashSalt, minLength);

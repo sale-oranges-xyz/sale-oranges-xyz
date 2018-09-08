@@ -1,18 +1,21 @@
 package com.github.geng.admin.entity;
 
-import com.github.geng.entity.BaseLongIdTimeEntity;
 import com.github.geng.constant.DataConstants;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 
 /**
  * 系统用户
  * @author geng
  */
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "sys_user")

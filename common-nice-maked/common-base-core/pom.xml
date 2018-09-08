@@ -14,4 +14,13 @@
     <artifactId>common-base-core</artifactId>
     <description>项目最基础模块，主要用于统一spring cloud 版本。其他使用spring start项目必须继承该模块</description>
 
+    <dependencies>
+        <!-- 系统模块 -->
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>common-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>

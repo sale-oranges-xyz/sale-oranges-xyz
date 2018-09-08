@@ -47,18 +47,11 @@
         </dependency>
 
 
-
         <!--系统模块-->
         <!-- feign 配置 -->
-        <!--<dependency>-->
-            <!--<groupId>com.github.geng</groupId>-->
-            <!--<artifactId>common-feign</artifactId>-->
-            <!--<version>1.0-SNAPSHOT</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>com.github.geng</groupId>
-            <artifactId>common-core</artifactId>
+            <artifactId>common-feign</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -82,6 +75,13 @@
             <artifactId>admin-user-redis</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- 管理员用户模块dto -->
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>admin-user-dto</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

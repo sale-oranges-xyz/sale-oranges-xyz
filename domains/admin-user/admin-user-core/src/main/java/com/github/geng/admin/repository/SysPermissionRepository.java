@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author geng
  */
-public interface SysPermissionRepository extends JpaRepository<SysPermission,Long> {
+public interface SysPermissionRepository extends JpaRepository<SysPermission, Long> {
 
     @Query(value = "SELECT sp.* from sys_user_role sur " +
             "left join sys_role_permission srp on sur.role_id = srp.role_id " +

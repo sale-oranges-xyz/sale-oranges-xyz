@@ -9,13 +9,17 @@ server:
 #路由映射处理
 zuul:
   ignored-services: "*" #忽略所有微服务，只路由指定微服务
-  # prefix: api #为zuul设置一个公共的前缀
+
   routes:   #这里是定义拦截path与serviceId绑定
     user:  #定义client客户端，再绑定path与serviceId,  user 是路由规则的名称，可以随意定义
       path: /api/** #
       serviceId: admin-user #指定需要调用的微服务id
       #默认情况下，敏感的头信息无法经过API网关进行传递,需要开启。
       sensitiveHeaders: "*"
+  ### 配置超时时间
+  host:
+      socket-timeout-millis: 40000
+      connect-timeout-millis: 40000
 
 # 忽略白名单
 gate:
@@ -23,5 +27,8 @@ gate:
     startWith: /static,/api/user/validate,/test
 
 ## redis 配置
-spring.redis.cluster.nodes[0]: 127.0.0.1:6379
-spring.redis.cluster.password: 123456
+spring.redis.hostName: 127.0.0.1
+spring.redis.port: 6379
+spring.redis.password: 123456
+
+### 熔断器配置

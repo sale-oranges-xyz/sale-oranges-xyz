@@ -1,6 +1,6 @@
 package com.github.geng.security.entity;
 
-import com.github.geng.bread.ListOptional;
+import com.github.geng.bread.CollectionOptional;
 import com.github.geng.matcher.SpringAntMatcher;
 import com.github.geng.util.ListUtils;
 import org.springframework.beans.factory.annotation.Value;

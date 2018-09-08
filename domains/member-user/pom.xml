@@ -16,9 +16,7 @@
 
     <modules>
         <module>member-user-api</module>
-        <module>member-user-core</module>
         <module>member-user-dto</module>
-        <module>member-user-remote</module>
     </modules>
 
 

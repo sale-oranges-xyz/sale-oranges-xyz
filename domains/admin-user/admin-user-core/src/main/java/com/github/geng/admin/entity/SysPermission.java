@@ -1,6 +1,5 @@
 package com.github.geng.admin.entity;
 
-import com.github.geng.entity.BaseLongIdTimeEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

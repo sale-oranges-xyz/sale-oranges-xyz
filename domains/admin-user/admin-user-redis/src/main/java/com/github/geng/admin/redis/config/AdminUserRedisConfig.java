@@ -14,7 +14,7 @@ public class AdminUserRedisConfig {
 
     /**
      * 创建redis权限找角色的key
-     * @param url 访问url
+     * @param url 配置url
      * @param method http 请求方式
      * @return redis权限找角色的key
      */
@@ -31,10 +31,6 @@ public class AdminUserRedisConfig {
         return COMMON_KEY + userId;
     }
 
-    /**
-     * 获取url集合
-     */
-    public static String GATEWAY_URL_KEY = "admin:gateway:url";
 
 //    public static void main(String[] args) {
 //        String url = "/user/permission/{id}/1saveedd"; // 1148495403  273226002  358083604

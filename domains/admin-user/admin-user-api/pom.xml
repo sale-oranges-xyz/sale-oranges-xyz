@@ -42,6 +42,13 @@
             <artifactId>common-jwt</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- 用户redis 模块 -->
+        <dependency>
+            <groupId>com.github.geng</groupId>
+            <artifactId>admin-user-redis</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

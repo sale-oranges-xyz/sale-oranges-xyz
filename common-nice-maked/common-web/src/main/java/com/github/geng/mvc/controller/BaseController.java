@@ -4,6 +4,8 @@ import com.github.geng.base.UserInterface;
 import com.github.geng.constant.DataConstants;
 import com.github.geng.exception.NotLoginException;
 import com.github.geng.mvc.util.RequestUtil;
+import com.github.geng.mvc.util.ResponseUtil;
+import com.github.geng.response.ApiResponseData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -41,6 +43,22 @@ public class BaseController {
         };
     }
 
+    /**
+     * 创建成功响应对象
+     * @param data 传输数据
+     * @param <T> 约束类型
+     * @return 成功响应对象
+     */
+    protected <T> ApiResponseData<T> success (T data) {
+        return ResponseUtil.success(data);
+    }
 
-
+    /**
+     * 创建异常响应对象
+     * @param message 传输数据
+     * @return 异常响应对象
+     */
+    protected ApiResponseData error (String message) {
+        return ResponseUtil.error(message);
+    }
 }

@@ -1,12 +1,10 @@
 package com.github.geng.admin.entity;
 
-import com.github.geng.entity.BaseLongIdTimeEntity;
 import com.github.geng.constant.DataConstants;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * 系统角色

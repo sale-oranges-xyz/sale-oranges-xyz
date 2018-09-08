@@ -25,6 +25,8 @@ public class DataConstants {
     // 提示语
     public static final String NO_FOUND = "查无对应记录";
 
+    // 用户权限不足
+    public static final String USER_FORBIDDEN = "用户权限不足";
     // -------------------------------------------------------
     // 网关向内部微服务传递的请求头常量名
     /**

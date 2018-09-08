@@ -10,7 +10,7 @@ import com.github.geng.constant.ResponseConstants;
 public class BizException extends BaseException{
 
     public BizException(String message) {
-        super(message, ResponseConstants.USER_UNKNOWN_ERROR);
+        super(message, ResponseConstants.USER_INPUT_ERROR);
     }
 
     /**

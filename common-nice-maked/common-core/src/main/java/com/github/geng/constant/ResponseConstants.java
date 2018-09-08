@@ -20,15 +20,16 @@ public class ResponseConstants {
     /**
      * 默认客户输入异常状态码
      */
-    public static int USER_UNKNOWN_ERROR = 500500;
+    public static int USER_INPUT_ERROR = 500500;
 
     /**
      * 远程调用异常
      */
     public static int REMOTE_EXCEPTION = 500002;
 
-    // ------------------------------------------------
-    // 服务端token异常
+    /**
+     *  服务端token异常
+     */
     public static final int CLIENT_FORBIDDEN = 4403;
 
 }

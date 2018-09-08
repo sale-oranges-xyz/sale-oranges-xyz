@@ -16,10 +16,9 @@
 
     <modules>
         <module>admin-user-api</module>
-        <module>admin-user-core</module>
         <module>admin-user-dto</module>
-        <module>admin-user-remote</module>
         <module>admin-user-redis</module>
+        <module>admin-user-core</module>
     </modules>
 
 

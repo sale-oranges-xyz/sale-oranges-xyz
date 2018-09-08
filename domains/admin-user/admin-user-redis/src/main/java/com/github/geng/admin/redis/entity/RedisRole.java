@@ -1,14 +1,14 @@
 package com.github.geng.admin.redis.entity;
 
 import com.github.geng.redis.entity.RedisModel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * @author geng
  */
-@Setter
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RedisRole extends RedisModel {
     private static final long serialVersionUID = 1L;
 

@@ -45,7 +45,7 @@ public class UserTokenConfig {
         if (header.length() <= tokenHeader.length()) {
             return "";
         } else {
-            return header.substring(header.length());
+            return header.substring(tokenHeader.length()).trim();
         }
     }
 

@@ -1,7 +1,7 @@
 package com.github.geng.admin.gateway.config;
 
-import com.github.geng.admin.redis.entity.RedisPermission;
-import com.github.geng.bread.ListOptional;
+import com.github.geng.admin.dto.SysPermissionDto;
+import com.github.geng.bread.CollectionOptional;
 import com.github.geng.matcher.SpringAntMatcher;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +19,12 @@ public class UrlMatcher {
 
     /**
      * 初始化
-     * @param redisPermissionList redis缓存的url集合
+     * @param sysPermissionDtoList 网关可通过的配置url集合
      */
-    public void init(List<RedisPermission> redisPermissionList) {
-        ListOptional.mapToArrayList(
-                redisPermissionList,
-                (redisPermission) -> springAntMatcherList.add(new SpringAntMatcher(redisPermission.getUrl(), true))
+    public void init(List<SysPermissionDto> sysPermissionDtoList) {
+        CollectionOptional.mapToArrayList(
+                sysPermissionDtoList,
+                (redisPermission) -> springAntMatcherList.add(new SpringAntMatcher(redisPermission.getUrl()))
         );
     }
 

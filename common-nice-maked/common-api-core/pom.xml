@@ -46,7 +46,7 @@
             <artifactId>common-swagger</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
+        <!-- web 通用配置 -->
         <dependency>
             <groupId>com.github.geng</groupId>
             <artifactId>common-web</artifactId>

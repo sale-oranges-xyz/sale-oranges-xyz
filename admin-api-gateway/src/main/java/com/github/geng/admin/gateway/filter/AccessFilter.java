@@ -5,15 +5,20 @@ import com.github.geng.admin.redis.config.AdminUserRedisConfig;
 import com.github.geng.admin.redis.entity.RedisRole;
 import com.github.geng.admin.redis.template.PermissionRoleTemplate;
 import com.github.geng.admin.redis.template.UserRoleTemplate;
-import com.github.geng.exception.ForbiddenException;
+import com.github.geng.constant.DataConstants;
+import com.github.geng.constant.ResponseConstants;
 import com.github.geng.gateway.filter.AbstractAccessFilter;
 import com.github.geng.token.config.UserTokenConfig;
 import com.github.geng.token.info.TokenInfo;
+import com.netflix.zuul.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
-import java.util.List;
+import java.util.Set;
+
+import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PROXY_KEY;
 
 
 /**
@@ -59,7 +64,7 @@ public class AccessFilter extends AbstractAccessFilter {
      */
     @Override
     public int filterOrder() {
-        return 1;
+        return 6;
     }
 
     /**
@@ -76,7 +81,7 @@ public class AccessFilter extends AbstractAccessFilter {
     // 真正业务逻辑
     @Override
     protected String getTokenHeader() {
-        return userTokenConfig.getTokenHeader();
+        return userTokenConfig.getHeader();
     }
 
     @Override
@@ -85,44 +90,31 @@ public class AccessFilter extends AbstractAccessFilter {
     }
 
     @Override
-    protected void validateTokenInfo(TokenInfo tokenInfo, String requestUri, String requestMethod) {
-        // 获取用户权限  userTokenInfo.getId()
+    protected void validateTokenInfo(TokenInfo tokenInfo, String requestUri, String requestMethod, RequestContext context) {
+        // 这里的requestUri是zuul 添加代理前缀后的信息，需要去掉
+//        String proxy = (String)context.get(PROXY_KEY);
+//        if (StringUtils.hasText(proxy)) {
+//            requestUri = requestUri.substring(String.format("/%s", proxy).length());
+//        }
+        // 获取用户权限
         // 这里的requestUri需要处理，因为是restful风格，部分内容需要还原
         String patternUrl = urlMatcher.findPattern(requestUri);
         // 根据权限查找角色
         String permissionKey = AdminUserRedisConfig.createPermissionKey(patternUrl, requestMethod);
-        List<RedisRole> permissionRoleList = this.permissionRoleTemplate.findAllOpsList(permissionKey);
         // 根据用户查找角色
         String adminKey = AdminUserRedisConfig.createAdminKey(tokenInfo.getId());
-        List<RedisRole> userRoleList = this.userRoleTemplate.findAllOpsList(adminKey);
-
-        if (CollectionUtils.isEmpty(userRoleList)) {
-            logger.debug("用户:{}权限列表为空", tokenInfo.getName());
-            throw new ForbiddenException("用户权限不足");
-        }
 
         // 用户权限检查,控制到url与方法访问方法匹配级别
-        boolean result = false;
-        // 判断两个集合是否有相同的角色
-        for (RedisRole userRole : userRoleList) {
-            if (userRole.isSuperAdmin()) { // 超级管理员，什么都可以访问
-                result = true;
-                break;
-            }
-            for (RedisRole permissionRole: permissionRoleList) {
-                if (permissionRole.getName().equals(userRole.getName())) {
-                    result = true;
-                    break;
-                }
-            }
-            if (result) {
-                break;
-            }
-        }
+        // 判断两个集合是否有相同的角色, 利用redis set 集合取交集做判断
+        Set<RedisRole> intersectRedisRole = this.permissionRoleTemplate
+                .opsForSet()
+                .intersect(permissionKey, adminKey);// 取交集
 
-        if (!result) {
+        if (CollectionUtils.isEmpty(intersectRedisRole)) { // 没有数据
             logger.debug("用户:{}无uri:{},method:{}访问权限", tokenInfo.getName(), requestUri, requestMethod);
-            throw new ForbiddenException("用户权限不足");
+            super.sendErrMsg(DataConstants.USER_FORBIDDEN,
+                    ResponseConstants.USER_FORBIDDEN_TOKEN,
+                    context);
         }
     }
 

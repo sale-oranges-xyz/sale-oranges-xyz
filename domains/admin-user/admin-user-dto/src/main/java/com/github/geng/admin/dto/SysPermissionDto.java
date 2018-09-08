@@ -1,7 +1,7 @@
 package com.github.geng.admin.dto;
 
-import com.github.geng.entity.BaseDtoEntity;
-import com.github.geng.entity.BaseLongIdEntity;
+import com.github.geng.admin.entity.BaseDtoEntity;
+import com.github.geng.admin.entity.BaseLongIdEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -36,7 +36,8 @@ public class SysPermissionDto extends BaseDtoEntity {
     // 多态使用
     public SysPermissionDto (BaseLongIdEntity baseLongIdEntity) {
         super(baseLongIdEntity);
-        BeanUtils.copyProperties(baseLongIdEntity, this, "id");
+        BeanUtils.copyProperties(baseLongIdEntity, this,
+                "id", "createTime", "modifyTime");
     }
 
 }
