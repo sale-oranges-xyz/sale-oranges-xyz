@@ -14,11 +14,9 @@ import com.netflix.zuul.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.Set;
 
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PROXY_KEY;
 
 
 /**
