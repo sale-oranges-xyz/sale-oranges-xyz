@@ -1,7 +1,7 @@
 package com.github.geng.admin.dto;
 
-import com.github.geng.admin.entity.BaseDtoEntity;
-import com.github.geng.admin.entity.BaseLongIdEntity;
+import com.github.geng.dto.DtoEntity;
+import com.github.geng.entity.BaseLongIdEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,7 +12,7 @@ import org.springframework.beans.BeanUtils;
  */
 @Data
 @ApiModel("用户权限描述")
-public class SysPermissionDto extends BaseDtoEntity {
+public class SysPermissionDto extends DtoEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "权限标识")
