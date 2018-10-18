@@ -7,18 +7,6 @@
 ##### 项目结构
 ```
  | - admin-api-gateway 后台管理部分api网关
- | - common-nice-maked 存放项目的公用模块
-    | - common-biz-core 聚合服务器方面通用模块
-    | - common-base-core 父模块，用于控制spring cloud版本号，其他微服务必须继承该模块
-    | - common-core 存放封装的公用代码库
-    | - common-feign feign 部分通用配置
-    | - common-gateway zuul网关部分通用配置
-    | - common-jwt  token 接口相关实现
-    | - common-redis redis使用配置
-    | - common-security 微服务通用security配置
-    | - common-swagger 接口api说明，前后端交互使用。注意api接口包名要以*.controller命名
-    | - common-token token 部分抽象接口
-    | - common-web web 部分通用代码
  | - domains 存放实体类与业务逻辑处理
     | - admin-user 微服务：后台管理中心
         | - admin-user-api 启动项目
@@ -33,6 +21,7 @@
  | - member-api-gateway  前端用户部分api网关
  | - register-center 服务注册中心
 ```
+##### 系统模块common-*，参考 https://github.com/sale-oranges-xyz/common-backstage
 ##### 项目启动顺序
 1. 服务注册中心 register-center
 2. 启动kafka, spring-cloud-bus 依赖
